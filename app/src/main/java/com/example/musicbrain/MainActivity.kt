@@ -7,10 +7,12 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.ui.Modifier
 import com.example.musicbrain.ui.MusicBrain
 import com.example.musicbrain.ui.theme.MusicBrainTheme
-//import com.example.musicbrain.ui.util.TaskNavigationType
+import com.example.musicbrain.ui.util.MusicBrainNavigationType
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
@@ -28,8 +30,22 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = androidx.compose.material3.MaterialTheme.colorScheme.background
                 ) {
+                    val windowSize = calculateWindowSizeClass(activity = this)
                     //Image(painter = painterResource(id = R.drawable.musicbrain), contentDescription = "MusicBrain", contentScale = ContentScale.Crop)
-                    MusicBrain()
+                    when (windowSize.widthSizeClass) {
+                        WindowWidthSizeClass.Compact -> {
+                            MusicBrain(MusicBrainNavigationType.BOTTOM_NAVIGATION)
+                        }
+                        WindowWidthSizeClass.Medium -> {
+                            MusicBrain(MusicBrainNavigationType.NAVIGATION_RAIL)
+                        }
+                        WindowWidthSizeClass.Expanded -> {
+                            MusicBrain(navigationType = MusicBrainNavigationType.PERMANENT_NAVIGATION_DRAWER)
+                        }
+                        else -> {
+                            MusicBrain(navigationType = MusicBrainNavigationType.BOTTOM_NAVIGATION)
+                        }
+                    }
                 }
             }
         }

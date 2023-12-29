@@ -1,155 +1,123 @@
 package com.example.musicbrain.ui
 
-import androidx.compose.foundation.clickable
-import androidx.compose.runtime.Composable
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Icon
-import androidx.compose.ui.Modifier
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.History
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.SearchBar
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.runtime.collectAsState
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.PermanentDrawerSheet
+import androidx.compose.material3.PermanentNavigationDrawer
+import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.room.util.query
-import com.example.musicbrain.model.Artist
-import com.example.musicbrain.ui.artistScreen.ArtistApiState
-import com.example.musicbrain.ui.artistScreen.ArtistsViewModel
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import com.example.musicbrain.R
+import com.example.musicbrain.ui.components.AppBar
+import com.example.musicbrain.ui.components.BottomBar
+import com.example.musicbrain.ui.components.NavigationDrawerContent
+import com.example.musicbrain.ui.components.NavigationRail
+import com.example.musicbrain.ui.navigation.Navigation
+import com.example.musicbrain.ui.navigation.NavigationRoutes
+import com.example.musicbrain.ui.util.MusicBrainNavigationType
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MusicBrain(
-    modifier: Modifier = Modifier,
-    artistsViewModel: ArtistsViewModel = viewModel(
-        factory = ArtistsViewModel.Factory
-    ),
+    navigationType: MusicBrainNavigationType,
+    navController: NavHostController = rememberNavController()
 ) {
-    val artistsState by artistsViewModel.uiState.collectAsState()
-    val artistListState by artistsViewModel.uiListState.collectAsState()
+    val backStackEntry by navController.currentBackStackEntryAsState()
 
-    val artistApiState = artistsViewModel.artistApiState
+    val goToArtists: () -> Unit = {
+        navController.popBackStack(
+            NavigationRoutes.Artists.name,
+            inclusive = false,
+        )
+    }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
-        SearchBar(
-            query = artistsState.query,
-            onQueryChange = artistsViewModel::updateQuery,
-            placeholder = {
-                Text("Search Artist")
-            },
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Default.Search,
-                    contentDescription = "Search Icon"
-                )
-            },
-            trailingIcon = {
-                if (artistsState.query.isNotEmpty()) {
-                    Icon(
-                        imageVector = Icons.Default.Close,
-                        contentDescription = "Close Icon",
-                        modifier = Modifier.clickable {
-                            if (artistsState.query.isNotEmpty()) {
-                                artistsViewModel.clearQuery()
-                                artistsViewModel.searchArtists()
-                            }
-                        }
+    val goToGenres = { navController.navigate(NavigationRoutes.Genres.name) { launchSingleTop = true } }
+
+    val currentScreenTitle = NavigationRoutes.valueOf(
+        backStackEntry?.destination?.route ?: NavigationRoutes.Artists.name,
+    ).title
+
+    when (navigationType) {
+        MusicBrainNavigationType.PERMANENT_NAVIGATION_DRAWER -> {
+            PermanentNavigationDrawer(drawerContent = {
+                PermanentDrawerSheet(Modifier.width(dimensionResource(R.dimen.drawer_width))) {
+                    NavigationDrawerContent(
+                        selectedDestination = navController.currentDestination,
+                        onTabPressed = { node: String -> navController.navigate(node) },
+                        modifier = Modifier
+                            .wrapContentWidth()
+                            .fillMaxHeight()
+                            .background(MaterialTheme.colorScheme.inverseOnSurface)
+                            .padding(dimensionResource(R.dimen.drawer_padding_content)),
                     )
                 }
-            },
-            active = artistsState.active,
-            onActiveChange = artistsViewModel::setActive,
-            modifier = Modifier.fillMaxWidth(),
-            onSearch = {
-                artistsViewModel.searchArtists()
-            }
-        ) {
-            if (artistsState.searchHistory.isEmpty()) {
-                Text("No recent searches", modifier = Modifier.padding(8.dp))
-            } else {
-                artistsState.searchHistory.reversed().forEach { query ->
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(8.dp)
-                            .clickable {
-                                artistsViewModel.updateQuery(query)
-                                artistsViewModel.searchArtists()
-                            }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.History,
-                            contentDescription = "History Icon",
+            }) {
+                Scaffold(
+                    containerColor = Color.Transparent,
+                    topBar = {
+                        AppBar(
+                            currentScreenTitle = currentScreenTitle,
                         )
-                        Text(query)
-                    }
+                    },
+                    // modifier = Modifier.padding(dimensionResource(id = R.dimen.drawer_width), 0.dp, 0.dp, 0.dp )
+                ) { innerPadding ->
+
+                    Navigation(
+                        navController = navController,
+                        modifier = Modifier.padding(innerPadding),
+                    )
                 }
             }
         }
+        MusicBrainNavigationType.BOTTOM_NAVIGATION -> {
+            Scaffold(
+                containerColor = Color.Transparent,
+                topBar = {
+                    AppBar(
+                        currentScreenTitle = currentScreenTitle,
+                    )
+                },
+                bottomBar = {
 
-        Button(
-            onClick = {
-                artistsViewModel.searchArtists()
-            },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Search")
-        }
+                    BottomBar(goToArtists, goToGenres)
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        when (artistApiState) {
-            ArtistApiState.Loading -> {
-                Text("Loading...")
-            }
-            ArtistApiState.Error -> {
-                Text("Error")
-            }
-            ArtistApiState.NotFound -> {
-                Text("Not Found")
-            }
-            ArtistApiState.Success -> {
-                ArtistList(artistListState.artists)
+                },
+            ) { innerPadding ->
+                Navigation(navController, modifier = Modifier.padding(innerPadding))
             }
         }
-    }
-}
+        else -> {
+            Row {
+                AnimatedVisibility(visible = navigationType == MusicBrainNavigationType.NAVIGATION_RAIL) {
+                    NavigationRail(
+                        selectedDestination = navController.currentDestination,
+                        onTabPressed = { node: String -> navController.navigate(node) },
+                    )
+                }
+                Scaffold(
+                    containerColor = MaterialTheme.colorScheme.background,
+                    topBar = {
+                        AppBar(
+                            currentScreenTitle = currentScreenTitle,
+                        )
+                    },
+                ) { innerPadding ->
 
-@Composable
-fun ArtistList(artists: List<Artist>) {
-    LazyColumn {
-        artists.subList(0, artists.count().coerceAtMost(20)).forEach { artist ->
-            item {
-                ArtistItem(artist)
+                    Navigation(navController, modifier = Modifier.padding(innerPadding))
+                }
             }
         }
-    }
-}
-
-@Composable
-fun ArtistItem(artist: Artist) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp)
-    ) {
-        Text(artist.name)
     }
 }
