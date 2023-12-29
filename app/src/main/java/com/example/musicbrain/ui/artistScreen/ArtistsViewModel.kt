@@ -68,12 +68,13 @@ class ArtistsViewModel(private val artistRepository: ArtistRepository): ViewMode
                     .map { ArtistListState(it) }
                     .stateIn(
                         scope = viewModelScope,
-                        started = SharingStarted.WhileSubscribed(5_000L),
+                        started = SharingStarted.WhileSubscribed(),
                         initialValue = ArtistListState()
                     )
                 _uiState.update {
                     it.copy(
                         active = false,
+                        searchHistory = it.searchHistory + it.query
                     )
                 }
                 artistApiState = ArtistApiState.Success

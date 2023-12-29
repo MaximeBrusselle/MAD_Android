@@ -21,19 +21,19 @@ fun MusicBrainApiService.getArtistResponseAsFlow(query: String = "a"): Flow<Arti
     catch(e: HttpException){
         when (e.code()) {
             400 ->
-                Log.e("MusicBrainApiService", "getArtistResponseAsFlow: ${e.message}")
+                Log.e("MusicBrainApiService", "getArtistResponseAsFlow400: ${e.message}")
             401->
-                Log.e("MusicBrainApiService", "getArtistResponseAsFlow: ${e.message}")
+                Log.e("MusicBrainApiService", "getArtistResponseAsFlow401: ${e.message}")
             403->
-                Log.e("MusicBrainApiService", "getArtistResponseAsFlow: ${e.message}")
+                Log.e("MusicBrainApiService", "getArtistResponseAsFlow403: ${e.message}")
             404->
-                Log.e("MusicBrainApiService", "getArtistResponseAsFlow: ${e.message}")
+                Log.e("MusicBrainApiService", "getArtistResponseAsFlow404: ${e.message}")
             500 ->
-                Log.e("MusicBrainApiService", "getArtistResponseAsFlow: ${e.message}")
+                Log.e("MusicBrainApiService", "getArtistResponseAsFlow500: ${e.message}")
             503 ->
-                Log.e("MusicBrainApiService", "getArtistResponseAsFlow: ${e.message}")
+                Log.e("MusicBrainApiService", "getArtistResponseAsFlow503: ${e.message}")
             else ->
-                Log.e("MusicBrainApiService", "getArtistResponseAsFlow: ${e.message}")
+                Log.e("MusicBrainApiService", "getArtistResponseAsFlowOther: ${e.message}")
         }
     }
 }
