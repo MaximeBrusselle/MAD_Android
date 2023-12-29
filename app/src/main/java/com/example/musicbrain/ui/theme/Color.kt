@@ -2,7 +2,7 @@ package com.example.musicbrain.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val md_theme_light_primary = Color(0xFFD32F2F)
+val md_theme_light_primary = Color(0xFF8D4F00)
 val md_theme_light_onPrimary = Color(0xFFFFFFFF)
 val md_theme_light_primaryContainer = Color(0xFFFFDCC0)
 val md_theme_light_onPrimaryContainer = Color(0xFF2E1600)

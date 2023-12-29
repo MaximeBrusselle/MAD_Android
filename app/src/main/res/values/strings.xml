@@ -2,7 +2,7 @@
     <string name="app_name">MusicBrain</string>
     <string name="artistsRoute">Artists</string>
     <string name="genresRoute">Genres</string>
-    <string name="artistDetailRoute">Albums</string>
+    <string name="artistDetailRoute">Detail</string>
     <string name="navigation_rail">Navigate between items here</string>
 
 </resources>

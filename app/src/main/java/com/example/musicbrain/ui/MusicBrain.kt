@@ -25,6 +25,7 @@ import com.example.musicbrain.ui.components.AppBar
 import com.example.musicbrain.ui.components.BottomBar
 import com.example.musicbrain.ui.components.NavigationDrawerContent
 import com.example.musicbrain.ui.components.NavigationRail
+import com.example.musicbrain.ui.navigation.Destinations
 import com.example.musicbrain.ui.navigation.Navigation
 import com.example.musicbrain.ui.navigation.NavigationRoutes
 import com.example.musicbrain.ui.util.MusicBrainNavigationType
@@ -43,11 +44,15 @@ fun MusicBrain(
         )
     }
 
-    val goToGenres = { navController.navigate(NavigationRoutes.Genres.name) { launchSingleTop = true } }
-
-    val currentScreenTitle = NavigationRoutes.valueOf(
-        backStackEntry?.destination?.route ?: NavigationRoutes.Artists.name,
-    ).title
+    val goToGenres = { navController.navigate(Destinations.GENRES) { launchSingleTop = true } }
+    val currentScreenTitle = backStackEntry?.destination?.route?.let {
+        when (it) {
+            Destinations.ARTISTS -> stringResource(id = R.string.artistsRoute)
+            Destinations.GENRES -> stringResource(id = R.string.genresRoute)
+            Destinations.DETAIL -> stringResource(id = R.string.artistDetailRoute)
+            else -> stringResource(id = R.string.app_name)
+        }
+    } ?: stringResource(id = R.string.app_name)
 
     when (navigationType) {
         MusicBrainNavigationType.PERMANENT_NAVIGATION_DRAWER -> {
@@ -71,7 +76,6 @@ fun MusicBrain(
                             currentScreenTitle = currentScreenTitle,
                         )
                     },
-                    // modifier = Modifier.padding(dimensionResource(id = R.dimen.drawer_width), 0.dp, 0.dp, 0.dp )
                 ) { innerPadding ->
 
                     Navigation(

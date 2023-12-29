@@ -11,3 +11,9 @@ enum class NavigationRoutes(@StringRes val title: Int, val icon: ImageVector) {
     Artists(R.string.artistsRoute, Icons.Default.Person),
     Genres(R.string.genresRoute, Icons.Default.LibraryMusic),
 }
+
+object Destinations {
+    const val ARTISTS = "Artists"
+    const val GENRES = "Genres"
+    const val DETAIL = "Detail/{artistId}"
+}

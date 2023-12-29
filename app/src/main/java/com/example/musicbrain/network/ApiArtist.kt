@@ -11,7 +11,7 @@ data class ApiArtist(
     @SerialName("score") val score: Int = 0,
     @SerialName("name") val name: String = "",
     @SerialName("gender") val gender: String = "",
-    @SerialName("disambiguition") val disambiguation: String = "",
+    @SerialName("disambiguation") val disambiguation: String = "",
 )
 
 fun ApiArtist.asDomainObject(): Artist {
