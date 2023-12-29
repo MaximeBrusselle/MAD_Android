@@ -71,6 +71,7 @@ fun ArtistsScreen(
                             if (artistsState.query.isNotEmpty()) {
                                 artistsViewModel.clearQuery()
                                 artistsViewModel.searchArtists()
+                                artistsViewModel.setActive(false)
                             }
                         }
                     )
