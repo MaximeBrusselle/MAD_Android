@@ -123,7 +123,8 @@ fun InstrumentsScreen(
                         )
                     },
                     toDetailPage = toDetailPage,
-                    modifier = modifier
+                    modifier = modifier,
+                    tagStart = "Instrument"
                 )
             }
         }

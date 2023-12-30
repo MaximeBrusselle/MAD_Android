@@ -12,6 +12,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import com.example.musicbrain.R
 import com.example.musicbrain.ui.navigation.NavigationRoutes
@@ -29,14 +31,13 @@ fun BottomBar(goToArtists: () -> Unit, goToGenres: () -> Unit) {
         NavigationBarItem(
             selected = selectedItemIndex == 0,
             onClick = {
-                Log.i("BottomBar", "selectedItemIndex: $selectedItemIndex")
                 goToArtists()
                 selectedItemIndex = 0
             },
             icon = {
                 Icon(
                     imageVector = NavigationRoutes.Artists.icon,
-                    contentDescription = R.string.artistsRoute.toString(),
+                    contentDescription = "Navigate to ${NavigationRoutes.Artists.title}",
                 )
             },
             label = {
@@ -44,7 +45,8 @@ fun BottomBar(goToArtists: () -> Unit, goToGenres: () -> Unit) {
             },
             colors = NavigationBarItemDefaults.colors(
                 indicatorColor = MaterialTheme.colorScheme.background,
-            )
+            ),
+            modifier = Modifier.testTag("NavigateToArtistsBottom")
         )
         NavigationBarItem(
             selected = selectedItemIndex == 1,
@@ -55,7 +57,7 @@ fun BottomBar(goToArtists: () -> Unit, goToGenres: () -> Unit) {
             icon = {
                 Icon(
                     imageVector = NavigationRoutes.Instruments.icon,
-                    contentDescription = R.string.instrumentsRoute.toString(),
+                    contentDescription = "Navigate to ${NavigationRoutes.Instruments.title}",
                 )
             },
             label = {
@@ -63,7 +65,8 @@ fun BottomBar(goToArtists: () -> Unit, goToGenres: () -> Unit) {
             },
             colors = NavigationBarItemDefaults.colors(
                 indicatorColor = MaterialTheme.colorScheme.background,
-            )
+            ),
+            modifier = Modifier.testTag("NavigateToInstrumentsBottom")
         )
     }
 }

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
@@ -21,5 +22,6 @@ fun DetailImage(
             .width(128.dp)
             .height(128.dp)
             .padding(8.dp)
+            .testTag("DetailImage")
     )
 }

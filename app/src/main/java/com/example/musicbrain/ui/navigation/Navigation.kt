@@ -6,7 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.musicbrain.ui.artistDetailScreen.ArtistDetailScreen
-import com.example.musicbrain.ui.artistScreen.ArtistsScreen
+import com.example.musicbrain.ui.artistsScreen.ArtistsScreen
 import com.example.musicbrain.ui.instrumentDetailScreen.InstrumentDetailScreen
 import com.example.musicbrain.ui.instrumentsScreen.InstrumentsScreen
 

@@ -1,4 +1,4 @@
-package com.example.musicbrain.ui.artistScreen
+package com.example.musicbrain.ui.artistsScreen
 
 import com.example.musicbrain.model.Artist
 

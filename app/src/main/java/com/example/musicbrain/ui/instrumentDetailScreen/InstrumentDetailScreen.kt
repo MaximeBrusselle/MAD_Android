@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.musicbrain.R
 import com.example.musicbrain.model.Instrument
+import com.example.musicbrain.ui.components.DetailImage
 import com.example.musicbrain.ui.components.InfoRow
 
 @Composable
@@ -83,6 +84,10 @@ fun InstrumentDetail(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
+        DetailImage(
+            id = R.drawable.instrumentsicon,
+            contentDescription = "Instrument Icon",
+        )
         Text(
             instrument.name,
             style = TextStyle(

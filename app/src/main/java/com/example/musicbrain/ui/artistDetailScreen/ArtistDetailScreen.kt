@@ -84,13 +84,22 @@ fun ArtistDetail(
     ) {
         when(artist.type) {
             "Person" -> {
-                DetailImage(id = R.drawable.personicon, contentDescription = artist.type)
+                DetailImage(
+                    id = R.drawable.personicon,
+                    contentDescription = artist.type,
+                )
             }
             "Group" -> {
-                DetailImage(id = R.drawable.groupicon, contentDescription = artist.type)
+                DetailImage(
+                    id = R.drawable.groupicon,
+                    contentDescription = artist.type,
+                )
             }
             else -> {
-                DetailImage(id = R.drawable.unknownicon, contentDescription = artist.type)
+                DetailImage(
+                    id = R.drawable.unknownicon,
+                    contentDescription = artist.type,
+                )
             }
         }
 

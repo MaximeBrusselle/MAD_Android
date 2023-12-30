@@ -1,4 +1,4 @@
-package com.example.musicbrain.ui.artistScreen
+package com.example.musicbrain.ui.artistsScreen
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.musicbrain.ui.components.ListComponent
@@ -73,7 +74,7 @@ fun ArtistsScreen(
             },
             active = artistsState.active,
             onActiveChange = artistsViewModel::setActive,
-            modifier = modifier.fillMaxWidth(),
+            modifier = modifier.fillMaxWidth().testTag("ArtistsSearchBar"),
             onSearch = {
                 artistsViewModel.searchArtists()
             }
@@ -123,7 +124,8 @@ fun ArtistsScreen(
                         )
                     },
                     toDetailPage = toDetailPage,
-                    modifier = modifier
+                    modifier = modifier,
+                    tagStart = "Artist"
                 )
             }
         }

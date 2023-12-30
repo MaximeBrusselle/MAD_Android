@@ -108,4 +108,6 @@ dependencies {
     androidTestImplementation("androidx.navigation:navigation-testing:2.7.5")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+
+    androidTestImplementation("androidx.test.uiautomator:uiautomator:2.3.0-beta01")
 }

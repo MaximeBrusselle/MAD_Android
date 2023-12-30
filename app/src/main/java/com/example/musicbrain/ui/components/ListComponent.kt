@@ -23,7 +23,8 @@ data class ListComponentItem(
 fun ListComponent(
     items: List<ListComponentItem>,
     toDetailPage: (id: String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    tagStart: String
 ) {
     Box {
         LazyColumn {
@@ -39,7 +40,8 @@ fun ListComponent(
                 itemsIndexed(items) { index, item ->
                     ItemComponent(
                         item = item,
-                        toDetailPage = toDetailPage
+                        toDetailPage = toDetailPage,
+                        tagStart = tagStart
                     )
                     if (index != items.lastIndex) {
                         Divider()

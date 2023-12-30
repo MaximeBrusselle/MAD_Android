@@ -6,6 +6,7 @@ import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.NavigationRailItem
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.navigation.NavDestination
 import com.example.musicbrain.ui.navigation.NavigationRoutes
 
@@ -22,7 +23,8 @@ fun NavigationRail(selectedDestination: NavDestination?, onTabPressed: (String) 
                 icon = {
                     Icon(
                         imageVector = navItem.icon,
-                        contentDescription = navItem.name,
+                        contentDescription = "Navigate to ${navItem.name}",
+                        modifier = Modifier.testTag("NavigateTo${navItem.name}Rail")
                     )
                 },
             )
