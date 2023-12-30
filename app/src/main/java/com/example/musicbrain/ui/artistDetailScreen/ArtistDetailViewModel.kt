@@ -28,11 +28,9 @@ class ArtistDetailViewModel(
 
     suspend fun getApiArtist(artistId: String) {
         try {
-            Log.d("ArtistDetail", "getApiArtist: $artistId")
             artistApiState = ArtistApiState.Loading
             viewModelScope.launch { artistRepository.refreshOne(id = artistId) }
             val artistDetail = artistRepository.getArtist(id = artistId).first()
-            Log.d("ArtistDetail", "getApiArtist: $artistDetail")
             _artist.value = artistDetail
             artistApiState = ArtistApiState.Success
         } catch (e: IOException) {

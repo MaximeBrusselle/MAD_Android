@@ -1,17 +1,26 @@
 package com.example.musicbrain.ui.artistDetailScreen
 
 import android.util.Log
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.QuestionMark
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -19,8 +28,16 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.musicbrain.R
 import com.example.musicbrain.model.Artist
 
 @Composable
@@ -46,13 +63,14 @@ fun ArtistDetailScreen(
                     .clickable {
                         onBack()
                     }
+                    .padding(8.dp)
             )
         }
         when (detailViewModel.artistApiState) {
             ArtistApiState.Success -> artist?.let {
                 ArtistDetail(
-                    artist = it,
-                    modifier = Modifier.fillMaxSize())
+                    artist = it
+                )
             }
             ArtistApiState.NotFound -> Text("Artist not found")
             ArtistApiState.Error -> Text("Error")
@@ -66,40 +84,100 @@ fun ArtistDetail(
     artist: Artist,
     modifier: Modifier = Modifier
 ) {
-    Log.d("ArtistDetail", "ArtistDetail.type: ${artist.type}")
     Column(
         modifier = modifier
-            .fillMaxSize()
-            .padding(8.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .padding(8.dp)
+            .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
         when(artist.type) {
             "Person" -> {
-                Icon(
-                    imageVector = Icons.Default.Person,
-                    contentDescription = "Person",
-//                    modifier = modifier
-                )
+                DetailImage(id = R.drawable.personicon, contentDescription = artist.type)
             }
             "Group" -> {
-                Icon(
-                    imageVector = Icons.Default.People,
-                    contentDescription = "Group",
-//                    modifier = modifier
-                )
+                DetailImage(id = R.drawable.groupicon, contentDescription = artist.type)
             }
             else -> {
-                Icon(
-                    imageVector = Icons.Default.QuestionMark,
-                    contentDescription = "Unknown",
-//                    modifier = modifier
-                )
+                DetailImage(id = R.drawable.unknownicon, contentDescription = artist.type)
             }
         }
-        Text(artist.name)
-        Text(text = artist.disambiguation)
-        Text(text = artist.gender)
-        Text(text = artist.score.toString())
 
+        Text(
+            artist.name,
+            style = TextStyle(
+                fontFamily = FontFamily.Default,
+                fontWeight = FontWeight.ExtraBold,
+                fontSize = 32.sp,
+                lineHeight = 36.sp,
+                letterSpacing = 0.sp
+            ),
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .padding(8.dp)
+                .fillMaxWidth()
+        )
+        Divider()
+
+        InfoRow(
+            field = stringResource(id = R.string.disambiguation),
+            value = artist.disambiguation
+        )
+        Divider()
+        InfoRow(
+            field = stringResource(id = R.string.gender),
+            value = artist.gender
+        )
+        Divider()
+        InfoRow(
+            field = stringResource(id = R.string.score),
+            value = artist.score.toString(),
+        )
+
+    }
+}
+
+@Composable
+fun DetailImage(
+    id: Int,
+    contentDescription: String,
+) {
+    Image(
+        painter = painterResource(id = id),
+        contentDescription = contentDescription,
+        modifier = Modifier
+            .width(128.dp)
+            .height(128.dp)
+            .padding(8.dp)
+    )
+}
+
+@Composable
+fun InfoRow(
+    field: String,
+    value: String,
+) {
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier
+            .padding(8.dp)
+            .fillMaxWidth()
+    ) {
+        Text(
+            text = field,
+            style = TextStyle(
+                fontFamily = FontFamily.Default,
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp,
+                lineHeight = 24.sp,
+                letterSpacing = 0.5.sp
+            ),
+            textAlign = TextAlign.Start,
+        )
+        Text(
+            text = value,
+            style = MaterialTheme.typography.bodyLarge,
+            textAlign = TextAlign.End,
+        )
     }
 }

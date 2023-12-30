@@ -11,8 +11,8 @@ data class dbArtist(
     val type: String = "",
     val score: Int = 0,
     val name: String = "",
-    val gender: String = "",
-    val disambiguation: String = "",
+    val gender: String = "Unknown",
+    val disambiguation: String = "Unknown",
 )
 
 fun dbArtist.asDomainArtist(): Artist {

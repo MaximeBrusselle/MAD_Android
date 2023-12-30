@@ -4,5 +4,8 @@
     <string name="genresRoute">Genres</string>
     <string name="artistDetailRoute">Detail</string>
     <string name="navigation_rail">Navigate between items here</string>
+    <string name="disambiguation">Disambiguation</string>
+    <string name="gender">Gender</string>
+    <string name="score">Score</string>
 
 </resources>

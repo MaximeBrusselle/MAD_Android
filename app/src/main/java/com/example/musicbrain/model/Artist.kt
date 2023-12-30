@@ -5,6 +5,6 @@ data class Artist(
     val type: String = "",
     val score: Int = 0,
     val name: String = "",
-    val gender: String = "",
-    val disambiguation: String = "",
+    val gender: String = "Unknown",
+    val disambiguation: String = "Unknown",
 )
