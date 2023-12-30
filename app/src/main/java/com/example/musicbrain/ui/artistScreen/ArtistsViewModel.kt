@@ -30,7 +30,7 @@ class ArtistsViewModel(private val artistRepository: ArtistRepository): ViewMode
     lateinit var uiListState: StateFlow<ArtistListState>
 
     // initial value is Loading
-    var artistApiState: ArtistApiState by mutableStateOf(ArtistApiState.Loading)
+    var artistsApiState: ArtistsApiState by mutableStateOf(ArtistsApiState.Loading)
         private set
 
     init {
@@ -48,12 +48,12 @@ class ArtistsViewModel(private val artistRepository: ArtistRepository): ViewMode
                     initialValue = ArtistListState()
                 )
             if (uiListState.value.artists.isEmpty()) {
-                artistApiState = ArtistApiState.NotFound
+                artistsApiState = ArtistsApiState.NotFound
             }
-            artistApiState = ArtistApiState.Success
+            artistsApiState = ArtistsApiState.Success
         } catch (e: IOException) {
             Log.e("ArtistsViewModel", "getApiArtists: ${e.message}")
-            artistApiState = ArtistApiState.Error
+            artistsApiState = ArtistsApiState.Error
         }
     }
 
@@ -77,10 +77,10 @@ class ArtistsViewModel(private val artistRepository: ArtistRepository): ViewMode
                         searchHistory = it.searchHistory + it.query
                     )
                 }
-                artistApiState = ArtistApiState.Success
+                artistsApiState = ArtistsApiState.Success
             } catch (e: IOException) {
                 Log.e("ArtistsViewModel", "searchArtists: ${e.message}")
-                artistApiState = ArtistApiState.Error
+                artistsApiState = ArtistsApiState.Error
             }
         }
     }

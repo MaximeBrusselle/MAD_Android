@@ -1,5 +1,6 @@
 package com.example.musicbrain.ui.navigation
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -24,15 +25,15 @@ fun Navigation(
         composable(Destinations.ARTISTS) {
             ArtistsScreen(
                 toDetailPage = { artistId ->
-                    navController.navigate("Detail/${artistId}")
+                    Log.d("ArtistDetail", "toDetailPage: Detail/$artistId")
+                    navController.navigate("Detail/$artistId")
                 }
             )
         }
 
-        composable(Destinations.DETAIL, arguments = listOf(navArgument("artistId") { type = NavType.StringType })) {
-            val artistId = it.arguments?.getString("artistId") ?: ""
+        composable(Destinations.DETAIL) { backStackEntry ->
             ArtistDetailScreen(
-                artistId = artistId,
+                artistId = backStackEntry.arguments?.getString("artistId")!!,
                 onBack = { navController.popBackStack() }
             )
         }

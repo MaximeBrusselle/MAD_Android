@@ -13,9 +13,9 @@ data class ArtistListState(val artists: List<Artist> = listOf())
 
 data class WorkerState(val workerInfo: WorkInfo? = null)
 
-sealed interface ArtistApiState {
-    object Success : ArtistApiState
-    object NotFound : ArtistApiState
-    object Error : ArtistApiState
-    object Loading : ArtistApiState
+sealed interface ArtistsApiState {
+    object Success : ArtistsApiState
+    object NotFound : ArtistsApiState
+    object Error : ArtistsApiState
+    object Loading : ArtistsApiState
 }

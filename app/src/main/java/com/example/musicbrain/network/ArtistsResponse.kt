@@ -7,18 +7,18 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ArtistResponse(
+data class ArtistsResponse(
     @SerialName("created") val created: String,
     @SerialName("count") val count: Int,
     @SerialName("offset") val offset: Int,
     @SerialName("artists") val artists: List<ApiArtist?>,
 )
 
-fun Flow<ArtistResponse>.asDomainObjects(): Flow<List<Artist>> {
+fun Flow<ArtistsResponse>.asDomainObjects(): Flow<List<Artist>> {
     return map { it.asDomainObject() }
 }
 
-fun ArtistResponse.asDomainObject(): List<Artist> {
+fun ArtistsResponse.asDomainObject(): List<Artist> {
     val domainList = this.artists.map {
         Artist(
             id = it!!.id,

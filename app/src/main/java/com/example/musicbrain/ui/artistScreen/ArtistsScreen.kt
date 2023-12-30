@@ -1,5 +1,6 @@
 package com.example.musicbrain.ui.artistScreen
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -43,7 +44,7 @@ fun ArtistsScreen(
     val artistsState by artistsViewModel.uiState.collectAsState()
     val artistListState by artistsViewModel.uiListState.collectAsState()
 
-    val artistApiState = artistsViewModel.artistApiState
+    val artistApiState = artistsViewModel.artistsApiState
 
     Column(
         modifier = modifier
@@ -110,16 +111,16 @@ fun ArtistsScreen(
         Spacer(modifier = modifier.height(16.dp))
 
         when (artistApiState) {
-            ArtistApiState.Loading -> {
+            ArtistsApiState.Loading -> {
                 Text("Loading...")
             }
-            ArtistApiState.Error -> {
+            ArtistsApiState.Error -> {
                 Text("Error")
             }
-            ArtistApiState.NotFound -> {
+            ArtistsApiState.NotFound -> {
                 Text("Not Found")
             }
-            ArtistApiState.Success -> {
+            ArtistsApiState.Success -> {
                 ArtistList(
                     artists = artistListState.artists,
                     toDetailPage = toDetailPage,
@@ -172,6 +173,7 @@ fun ArtistItem(
             .fillMaxWidth()
             .padding(8.dp)
             .clickable {
+                Log.d("ArtistDetail", "ArtistItemClicked: ${artist.id}")
                 toDetailPage(artist.id)
             },
         horizontalArrangement = Arrangement.SpaceBetween,
