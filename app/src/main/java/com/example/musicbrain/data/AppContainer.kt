@@ -12,6 +12,7 @@ import retrofit2.Retrofit
 
 interface AppContainer {
     val artistRepository: ArtistRepository
+    val instrumentRepository: InstrumentRepository
 }
 
 class DefaultAppContainer(private val context: Context) : AppContainer {
@@ -30,6 +31,7 @@ class DefaultAppContainer(private val context: Context) : AppContainer {
         .addConverterFactory(
             json.asConverterFactory("application/json".toMediaType())
         )
+        .client(client)
         .baseUrl(baseUrl)
         .build()
 
@@ -39,5 +41,9 @@ class DefaultAppContainer(private val context: Context) : AppContainer {
 
     override val artistRepository: ArtistRepository by lazy {
         ApiArtistsRepository(MusicDb.getDatabase(context = context).artistDao(), retrofitService)
+    }
+
+    override val instrumentRepository: InstrumentRepository by lazy {
+        ApiInstrumentsRepository(MusicDb.getDatabase(context = context).instrumentDao(), retrofitService)
     }
 }

@@ -1,4 +1,5 @@
-package com.example.musicbrain.ui.artistDetailScreen
+package com.example.musicbrain.ui.instrumentDetailScreen
+
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -11,6 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -27,24 +29,23 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.musicbrain.R
-import com.example.musicbrain.model.Artist
-import com.example.musicbrain.ui.components.DetailImage
+import com.example.musicbrain.model.Instrument
 import com.example.musicbrain.ui.components.InfoRow
 
 @Composable
-fun ArtistDetailScreen(
-    artistId: String,
+fun InstrumentDetailScreen(
+    instrumentId: String,
     onBack: () -> Unit,
-    detailViewModel: ArtistDetailViewModel = viewModel(
-        factory = ArtistDetailViewModel.Factory,
+    detailViewModel: InstrumentDetailViewModel = viewModel(
+        factory = InstrumentDetailViewModel.Factory,
     ),
 ) {
 
-    LaunchedEffect(artistId) {
-        detailViewModel.getApiArtist(artistId = artistId)
+    LaunchedEffect(instrumentId) {
+        detailViewModel.getApiInstrument(instrumentId = instrumentId)
     }
 
-    val artist by detailViewModel.artist.collectAsState()
+    val instrument by detailViewModel.instrument.collectAsState()
     Column {
         Row {
             Icon(
@@ -57,22 +58,22 @@ fun ArtistDetailScreen(
                     .padding(8.dp)
             )
         }
-        when (detailViewModel.artistApiState) {
-            ArtistApiState.Success -> artist?.let {
-                ArtistDetail(
-                    artist = it
+        when (detailViewModel.instrumentApiState) {
+            InstrumentApiState.Success -> instrument?.let {
+                InstrumentDetail(
+                    instrument = it
                 )
             }
-            ArtistApiState.NotFound -> Text("Artist not found")
-            ArtistApiState.Error -> Text("Error")
-            ArtistApiState.Loading -> Text("Loading")
+            InstrumentApiState.NotFound -> Text("Instrument not found")
+            InstrumentApiState.Error -> Text("Error")
+            InstrumentApiState.Loading -> Text("Loading")
         }
     }
 }
 
 @Composable
-fun ArtistDetail(
-    artist: Artist,
+fun InstrumentDetail(
+    instrument: Instrument,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -82,20 +83,8 @@ fun ArtistDetail(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        when(artist.type) {
-            "Person" -> {
-                DetailImage(id = R.drawable.personicon, contentDescription = artist.type)
-            }
-            "Group" -> {
-                DetailImage(id = R.drawable.groupicon, contentDescription = artist.type)
-            }
-            else -> {
-                DetailImage(id = R.drawable.unknownicon, contentDescription = artist.type)
-            }
-        }
-
         Text(
-            artist.name,
+            instrument.name,
             style = TextStyle(
                 fontFamily = FontFamily.Default,
                 fontWeight = FontWeight.ExtraBold,
@@ -108,21 +97,24 @@ fun ArtistDetail(
                 .padding(8.dp)
                 .fillMaxWidth()
         )
+        Text(
+            instrument.description,
+            style = MaterialTheme.typography.bodySmall,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .padding(8.dp)
+                .fillMaxWidth()
+        )
         Divider()
 
         InfoRow(
-            field = stringResource(id = R.string.disambiguation),
-            value = artist.disambiguation
-        )
-        Divider()
-        InfoRow(
-            field = stringResource(id = R.string.gender),
-            value = artist.gender
+            field = stringResource(id = R.string.type),
+            value = instrument.type
         )
         Divider()
         InfoRow(
             field = stringResource(id = R.string.score),
-            value = artist.score.toString(),
+            value = instrument.score.toString(),
         )
 
     }

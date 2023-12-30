@@ -1,16 +1,14 @@
 package com.example.musicbrain.ui.navigation
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
 import com.example.musicbrain.ui.artistDetailScreen.ArtistDetailScreen
 import com.example.musicbrain.ui.artistScreen.ArtistsScreen
-import com.example.musicbrain.ui.genresScreen.GenresScreen
+import com.example.musicbrain.ui.instrumentDetailScreen.InstrumentDetailScreen
+import com.example.musicbrain.ui.instrumentsScreen.InstrumentsScreen
 
 @Composable
 fun Navigation(
@@ -25,21 +23,30 @@ fun Navigation(
         composable(Destinations.ARTISTS) {
             ArtistsScreen(
                 toDetailPage = { artistId ->
-                    Log.d("ArtistDetail", "toDetailPage: Detail/$artistId")
-                    navController.navigate("Detail/$artistId")
+                    navController.navigate("Artists/$artistId")
                 }
             )
         }
 
-        composable(Destinations.DETAIL) { backStackEntry ->
+        composable(Destinations.ARTIST_DETAIL) { backStackEntry ->
             ArtistDetailScreen(
                 artistId = backStackEntry.arguments?.getString("artistId")!!,
                 onBack = { navController.popBackStack() }
             )
         }
 
-        composable(Destinations.GENRES) {
-            GenresScreen()
+        composable(Destinations.INSTRUMENTS) {
+            InstrumentsScreen(
+                toDetailPage = { instrumentId ->
+                    navController.navigate("Instruments/$instrumentId")
+                }
+            )
+        }
+        composable(Destinations.INSTRUMENT_DETAIL) { backStackEntry ->
+            InstrumentDetailScreen(
+                instrumentId = backStackEntry.arguments?.getString("instrumentId")!!,
+                onBack = { navController.popBackStack() }
+            )
         }
     }
 }

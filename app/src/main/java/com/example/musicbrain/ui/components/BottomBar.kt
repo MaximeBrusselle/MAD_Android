@@ -54,12 +54,12 @@ fun BottomBar(goToArtists: () -> Unit, goToGenres: () -> Unit) {
             },
             icon = {
                 Icon(
-                    imageVector = NavigationRoutes.Genres.icon,
-                    contentDescription = R.string.genresRoute.toString(),
+                    imageVector = NavigationRoutes.Instruments.icon,
+                    contentDescription = R.string.instrumentsRoute.toString(),
                 )
             },
             label = {
-                Text(text = stringResource(id = R.string.genresRoute))
+                Text(text = stringResource(id = R.string.instrumentsRoute))
             },
             colors = NavigationBarItemDefaults.colors(
                 indicatorColor = MaterialTheme.colorScheme.background,

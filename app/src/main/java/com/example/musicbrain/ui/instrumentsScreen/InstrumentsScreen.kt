@@ -1,4 +1,4 @@
-package com.example.musicbrain.ui.artistScreen
+package com.example.musicbrain.ui.instrumentsScreen
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -27,17 +27,17 @@ import com.example.musicbrain.ui.components.ListComponentItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ArtistsScreen(
+fun InstrumentsScreen(
     toDetailPage: (id: String) -> Unit,
     modifier: Modifier = Modifier,
-    artistsViewModel: ArtistsViewModel = viewModel(
-        factory = ArtistsViewModel.Factory
+    instrumentsViewModel: InstrumentsViewModel = viewModel(
+        factory = InstrumentsViewModel.Factory
     ),
 ) {
-    val artistsState by artistsViewModel.uiState.collectAsState()
-    val artistListState by artistsViewModel.uiListState.collectAsState()
+    val instrumentsState by instrumentsViewModel.uiState.collectAsState()
+    val instrumentListState by instrumentsViewModel.uiListState.collectAsState()
 
-    val artistApiState = artistsViewModel.artistsApiState
+    val instrumentApiState = instrumentsViewModel.instrumentsApiState
 
     Column(
         modifier = modifier
@@ -45,10 +45,10 @@ fun ArtistsScreen(
             .padding(16.dp)
     ) {
         SearchBar(
-            query = artistsState.query,
-            onQueryChange = artistsViewModel::updateQuery,
+            query = instrumentsState.query,
+            onQueryChange = instrumentsViewModel::updateQuery,
             placeholder = {
-                Text("Search Artist")
+                Text("Search Instrument")
             },
             leadingIcon = {
                 Icon(
@@ -57,38 +57,38 @@ fun ArtistsScreen(
                 )
             },
             trailingIcon = {
-                if (artistsState.query.isNotEmpty()) {
+                if (instrumentsState.query.isNotEmpty()) {
                     Icon(
                         imageVector = Icons.Default.Close,
                         contentDescription = "Close Icon",
                         modifier = modifier.clickable {
-                            if (artistsState.query.isNotEmpty()) {
-                                artistsViewModel.clearQuery()
-                                artistsViewModel.searchArtists()
-                                artistsViewModel.setActive(false)
+                            if (instrumentsState.query.isNotEmpty()) {
+                                instrumentsViewModel.clearQuery()
+                                instrumentsViewModel.searchInstruments()
+                                instrumentsViewModel.setActive(false)
                             }
                         }
                     )
                 }
             },
-            active = artistsState.active,
-            onActiveChange = artistsViewModel::setActive,
+            active = instrumentsState.active,
+            onActiveChange = instrumentsViewModel::setActive,
             modifier = modifier.fillMaxWidth(),
             onSearch = {
-                artistsViewModel.searchArtists()
+                instrumentsViewModel.searchInstruments()
             }
         ) {
-            if (artistsState.searchHistory.isEmpty()) {
+            if (instrumentsState.searchHistory.isEmpty()) {
                 Text("No recent searches", modifier = modifier.padding(8.dp))
             } else {
-                artistsState.searchHistory.reversed().forEach { query ->
+                instrumentsState.searchHistory.reversed().forEach { query ->
                     Row(
                         modifier = modifier
                             .fillMaxWidth()
                             .padding(8.dp)
                             .clickable {
-                                artistsViewModel.updateQuery(query)
-                                artistsViewModel.searchArtists()
+                                instrumentsViewModel.updateQuery(query)
+                                instrumentsViewModel.searchInstruments()
                             }
                     ) {
                         Icon(
@@ -103,23 +103,23 @@ fun ArtistsScreen(
 
         Spacer(modifier = modifier.height(16.dp))
 
-        when (artistApiState) {
-            ArtistsApiState.Loading -> {
+        when (instrumentApiState) {
+            InstrumentsApiState.Loading -> {
                 Text("Loading...")
             }
-            ArtistsApiState.Error -> {
+            InstrumentsApiState.Error -> {
                 Text("Error")
             }
-            ArtistsApiState.NotFound -> {
+            InstrumentsApiState.NotFound -> {
                 Text("Not Found")
             }
-            ArtistsApiState.Success -> {
+            InstrumentsApiState.Success -> {
                 ListComponent(
-                    items = artistListState.artists.map {
+                    items = instrumentListState.instruments.map {
                         ListComponentItem(
                             id = it.id,
                             name = it.name,
-                            type = it.type,
+                            type = it.type
                         )
                     },
                     toDetailPage = toDetailPage,

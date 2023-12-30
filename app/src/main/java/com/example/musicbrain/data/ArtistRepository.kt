@@ -11,7 +11,7 @@ import com.example.musicbrain.network.MusicBrainApiService
 import com.example.musicbrain.network.asDomainObject
 import com.example.musicbrain.network.asDomainObjects
 import com.example.musicbrain.network.getArtistAsFlow
-import com.example.musicbrain.network.getArtistResponseAsFlow
+import com.example.musicbrain.network.getArtistsResponseAsFlow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
@@ -50,7 +50,7 @@ class ApiArtistsRepository(private val artistDao: ArtistDao, private val musicbr
 
     override suspend fun refresh() {
         try {
-            musicbrainApiService.getArtistResponseAsFlow().asDomainObjects().collect { value ->
+            musicbrainApiService.getArtistsResponseAsFlow().asDomainObjects().collect { value ->
                 for (artist in value) {
                     artistDao.insert(artist.asDbArtist())
                 }
@@ -62,7 +62,7 @@ class ApiArtistsRepository(private val artistDao: ArtistDao, private val musicbr
 
     override suspend fun refreshSearch(search: String) {
         try {
-            musicbrainApiService.getArtistResponseAsFlow(search).asDomainObjects().collect { value ->
+            musicbrainApiService.getArtistsResponseAsFlow(search).asDomainObjects().collect { value ->
                 for (artist in value) {
                     artistDao.insert(artist.asDbArtist())
                 }

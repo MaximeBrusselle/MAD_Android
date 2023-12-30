@@ -13,7 +13,7 @@ interface ArtistDao {
     @Query("SELECT * from artists WHERE id = :id")
     fun getItem(id: String): Flow<dbArtist>
 
-    @Query("SELECT * from artists WHERE name LIKE :query ORDER BY name ASC ")
+    @Query("SELECT * from artists WHERE name LIKE :query ORDER BY name COLLATE NOCASE ASC ")
     fun getAllItems(query: String): Flow<List<dbArtist>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

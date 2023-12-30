@@ -1,6 +1,5 @@
 package com.example.musicbrain.ui.artistScreen
 
-import androidx.work.WorkInfo
 import com.example.musicbrain.model.Artist
 
 data class ArtistsState(
@@ -10,8 +9,6 @@ data class ArtistsState(
 )
 
 data class ArtistListState(val artists: List<Artist> = listOf())
-
-data class WorkerState(val workerInfo: WorkInfo? = null)
 
 sealed interface ArtistsApiState {
     object Success : ArtistsApiState

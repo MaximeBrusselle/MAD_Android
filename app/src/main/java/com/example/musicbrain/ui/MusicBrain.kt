@@ -44,12 +44,13 @@ fun MusicBrain(
         )
     }
 
-    val goToGenres = { navController.navigate(Destinations.GENRES) { launchSingleTop = true } }
+    val goToGenres = { navController.navigate(Destinations.INSTRUMENTS) { launchSingleTop = true } }
     val currentScreenTitle = backStackEntry?.destination?.route?.let {
         when (it) {
             Destinations.ARTISTS -> stringResource(id = R.string.artistsRoute)
-            Destinations.GENRES -> stringResource(id = R.string.genresRoute)
-            Destinations.DETAIL -> stringResource(id = R.string.artistDetailRoute)
+            Destinations.INSTRUMENTS -> stringResource(id = R.string.instrumentsRoute)
+            Destinations.ARTIST_DETAIL -> stringResource(id = R.string.artistDetailRoute)
+            Destinations.INSTRUMENT_DETAIL -> stringResource(id = R.string.instrumentDetailRoute)
             else -> stringResource(id = R.string.app_name)
         }
     } ?: stringResource(id = R.string.app_name)

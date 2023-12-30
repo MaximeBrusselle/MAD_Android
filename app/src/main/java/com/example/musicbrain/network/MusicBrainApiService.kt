@@ -16,29 +16,23 @@ interface MusicBrainApiService {
     @GET("artist/{id}")
     @Headers("Accept: application/json", "User-Agent: MyAndroidApp")
     suspend fun getArtist(@Query("id") id: String): ApiArtist
+
+    @GET("instrument")
+    @Headers("Accept: application/json", "User-Agent: MyAndroidApp")
+    suspend fun searchInstrument(@Query("query") query: String): InstrumentsResponse
+
+    @GET("instrument/{id}")
+    @Headers("Accept: application/json", "User-Agent: MyAndroidApp")
+    suspend fun getInstrument(@Query("id") id: String): ApiInstrument
+
 }
 
-fun MusicBrainApiService.getArtistResponseAsFlow(query: String = "a"): Flow<ArtistsResponse> = flow {
+fun MusicBrainApiService.getArtistsResponseAsFlow(query: String = "a"): Flow<ArtistsResponse> = flow {
     try {
         emit(searchArtist(query))
     }
     catch(e: HttpException){
-        when (e.code()) {
-            400 ->
-                Log.e("MusicBrainApiService", "getArtistResponseAsFlow400: ${e.message}")
-            401->
-                Log.e("MusicBrainApiService", "getArtistResponseAsFlow401: ${e.message}")
-            403->
-                Log.e("MusicBrainApiService", "getArtistResponseAsFlow403: ${e.message}")
-            404->
-                Log.e("MusicBrainApiService", "getArtistResponseAsFlow404: ${e.message}")
-            500 ->
-                Log.e("MusicBrainApiService", "getArtistResponseAsFlow500: ${e.message}")
-            503 ->
-                Log.e("MusicBrainApiService", "getArtistResponseAsFlow503: ${e.message}")
-            else ->
-                Log.e("MusicBrainApiService", "getArtistResponseAsFlowOther: ${e.message}")
-        }
+        errorHandler(e.code(), "getArtistsResponseAsFlow", e.message())
     }
 }
 
@@ -47,21 +41,36 @@ fun MusicBrainApiService.getArtistAsFlow(id: String): Flow<ApiArtist> = flow {
         emit(getArtist(id))
     }
     catch(e: HttpException){
-        when (e.code()) {
-            400 ->
-                Log.e("MusicBrainApiService", "getArtistAsFlow400: ${e.message}")
-            401->
-                Log.e("MusicBrainApiService", "getArtistAsFlow401: ${e.message}")
-            403->
-                Log.e("MusicBrainApiService", "getArtistAsFlow403: ${e.message}")
-            404->
-                Log.e("MusicBrainApiService", "getArtistAsFlow404: ${e.message}")
-            500 ->
-                Log.e("MusicBrainApiService", "getArtistAsFlow500: ${e.message}")
-            503 ->
-                Log.e("MusicBrainApiService", "getArtistAsFlow503: ${e.message}")
-            else ->
-                Log.e("MusicBrainApiService", "getArtistAsFlowOther: ${e.message}")
-        }
+        errorHandler(e.code(), "getArtistAsFlow", e.message())
+    }
+}
+
+fun MusicBrainApiService.getInstrumentsResponseAsFlow(query: String = "a"): Flow<InstrumentsResponse> = flow {
+    try {
+        emit(searchInstrument(query))
+    }
+    catch(e: HttpException){
+        errorHandler(e.code(), "getInstrumentsResponseAsFlow", e.message())
+    }
+}
+
+fun MusicBrainApiService.getInstrumentAsFlow(id: String): Flow<ApiInstrument> = flow {
+    try {
+        emit(getInstrument(id))
+    }
+    catch(e: HttpException){
+        errorHandler(e.code(), "getInstrumentAsFlow", e.message())
+    }
+}
+
+fun errorHandler(
+    code: Int?,
+    tag: String,
+    errorMessage: String,
+) {
+    if (code == null) {
+        Log.e("MusicBrainApiService", "$tag: $errorMessage")
+    } else {
+        Log.e("MusicBrainApiService", "$tag$code: $errorMessage")
     }
 }
