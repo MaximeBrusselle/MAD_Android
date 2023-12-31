@@ -58,15 +58,15 @@ class InstrumentDaoTest {
     @Throws(Exception::class)
     fun daoInert_insertInstrumentIntoDB() = runBlocking {
         addOneInstrumentToDb()
-        val allItems = instrumentDao.getAllItems("musicbrainInstrumentDaoTest").first()
+        val allItems = instrumentDao.getAllItems().first()
         assertEquals(allItems[0].asDomainInstrument(), instrument1)
     }
 
     @Test
     @Throws(Exception::class)
-    fun daoGetAllTasks_returnsAllTasksFromDB() = runBlocking {
+    fun daoGetAllInstruments_returnsAllInstrumentsFromDB() = runBlocking {
         addTwoInstrumentsToDb()
-        val allItems = instrumentDao.getAllItems("musicbrainInstrumentDaoTest").first()
+        val allItems = instrumentDao.getAllItems().first()
         assertEquals(allItems[0].asDomainInstrument(), instrument1)
         assertEquals(allItems[1].asDomainInstrument(), instrument2)
     }

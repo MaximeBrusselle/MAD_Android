@@ -11,7 +11,7 @@ import com.example.musicbrain.network.MusicBrainApiService
 import com.example.musicbrain.network.asDomainObject
 import com.example.musicbrain.network.asDomainObjects
 import com.example.musicbrain.network.getInstrumentAsFlow
-import com.example.musicbrain.network.getInstrumentsResponseAsFlow
+import com.example.musicbrain.network.getInstrumentsAsFlow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
@@ -19,8 +19,10 @@ import java.net.SocketTimeoutException
 
 interface InstrumentRepository {
 
-    fun getInstruments(query: String? = ""): Flow<List<Instrument>>
+    fun getInstruments(): Flow<List<Instrument>>
     fun getInstrument(id: String): Flow<Instrument>
+
+    fun searchInstruments(query: String): Flow<List<Instrument>>
     suspend fun refreshSearch(search: String)
     suspend fun refresh()
 
@@ -29,12 +31,12 @@ interface InstrumentRepository {
 
 class ApiInstrumentsRepository(private val instrumentDao: InstrumentDao, private val musicbrainApiService: MusicBrainApiService) : InstrumentRepository {
 
-    override fun getInstruments(query: String?): Flow<List<Instrument>> {
-        return instrumentDao.getAllItems("$query").map {
+    override fun getInstruments(): Flow<List<Instrument>> {
+        return instrumentDao.getAllItems().map {
             it.asDomainInstruments()
         }.onEach {
             if (it.isEmpty()) {
-                refreshSearch(query ?: "")
+                refresh()
             }
         }
     }
@@ -48,9 +50,19 @@ class ApiInstrumentsRepository(private val instrumentDao: InstrumentDao, private
         }
     }
 
+    override fun searchInstruments(query: String): Flow<List<Instrument>> {
+        return instrumentDao.getSearchItems("%$query%").map {
+            it.asDomainInstruments()
+        }.onEach {
+            if (it.isEmpty()) {
+                refreshSearch(query)
+            }
+        }
+    }
+
     override suspend fun refresh() {
         try {
-            musicbrainApiService.getInstrumentsResponseAsFlow().asDomainObjects().collect { value ->
+            musicbrainApiService.getInstrumentsAsFlow().asDomainObjects().collect { value ->
                 for (instrument in value) {
                     instrumentDao.insert(instrument.asDbInstrument())
                 }
@@ -62,7 +74,7 @@ class ApiInstrumentsRepository(private val instrumentDao: InstrumentDao, private
 
     override suspend fun refreshSearch(search: String) {
         try {
-            musicbrainApiService.getInstrumentsResponseAsFlow(search).asDomainObjects().collect { value ->
+            musicbrainApiService.getInstrumentsAsFlow(search).asDomainObjects().collect { value ->
                 for (instrument in value) {
                     instrumentDao.insert(instrument.asDbInstrument())
                 }

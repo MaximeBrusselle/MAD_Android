@@ -41,7 +41,7 @@ class InstrumentsViewModel(private val instrumentRepository: InstrumentRepositor
         try {
             viewModelScope.launch { instrumentRepository.refresh() }
 
-            uiListState = instrumentRepository.getInstruments(query = _uiState.value.query).map { InstrumentListState(it) }
+            uiListState = instrumentRepository.getInstruments().map { InstrumentListState(it) }
                 .stateIn(
                     scope = viewModelScope,
                     started = SharingStarted.WhileSubscribed(5_000L),
@@ -64,7 +64,7 @@ class InstrumentsViewModel(private val instrumentRepository: InstrumentRepositor
             try {
                 viewModelScope.launch { instrumentRepository.refreshSearch(_uiState.value.query) }
 
-                uiListState = instrumentRepository.getInstruments(_uiState.value.query)
+                uiListState = instrumentRepository.searchInstruments(_uiState.value.query)
                     .map { InstrumentListState(it) }
                     .stateIn(
                         scope = viewModelScope,

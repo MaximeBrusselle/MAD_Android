@@ -13,8 +13,11 @@ interface InstrumentDao {
     @Query("SELECT * from instruments WHERE id = :id")
     fun getItem(id: String): Flow<dbInstrument>
 
-    @Query("SELECT * from instruments WHERE name LIKE '%' || :query || '%' ORDER BY name COLLATE NOCASE ASC ")
-    fun getAllItems(query: String): Flow<List<dbInstrument>>
+    @Query("SELECT * from instruments ORDER BY name COLLATE NOCASE ASC ")
+    fun getAllItems(): Flow<List<dbInstrument>>
+
+    @Query("SELECT * from instruments WHERE name LIKE :search ORDER BY name COLLATE NOCASE ASC ")
+    fun getSearchItems(search: String): Flow<List<dbInstrument>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(item: dbInstrument)

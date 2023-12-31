@@ -21,7 +21,9 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class ArtistsViewModel(private val artistRepository: ArtistRepository): ViewModel() {
+class ArtistsViewModel(
+    private val artistRepository: ArtistRepository
+): ViewModel() {
     private val _uiState =
         MutableStateFlow(
             ArtistsState()
@@ -37,7 +39,7 @@ class ArtistsViewModel(private val artistRepository: ArtistRepository): ViewMode
         getApiArtists()
     }
 
-    fun getApiArtists() {
+   fun getApiArtists() {
         try {
             viewModelScope.launch { artistRepository.refresh() }
 
@@ -64,7 +66,7 @@ class ArtistsViewModel(private val artistRepository: ArtistRepository): ViewMode
             try {
                 viewModelScope.launch { artistRepository.refreshSearch(_uiState.value.query) }
 
-                uiListState = artistRepository.getArtists(_uiState.value.query)
+                uiListState = artistRepository.searchArtists(_uiState.value.query)
                     .map { ArtistListState(it) }
                     .stateIn(
                         scope = viewModelScope,
@@ -76,9 +78,6 @@ class ArtistsViewModel(private val artistRepository: ArtistRepository): ViewMode
                         active = false,
                         searchHistory = it.searchHistory + it.query
                     )
-                }
-                if (uiListState.value.artists.isEmpty()) {
-                    artistsApiState = ArtistsApiState.NotFound
                 }
                 artistsApiState = ArtistsApiState.Success
             } catch (e: IOException) {

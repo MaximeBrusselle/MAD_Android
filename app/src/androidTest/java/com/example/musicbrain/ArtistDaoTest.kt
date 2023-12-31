@@ -58,15 +58,15 @@ class ArtistDaoTest {
     @Throws(Exception::class)
     fun daoInert_insertArtistIntoDB() = runBlocking {
         addOneArtistToDb()
-        val allItems = artistDao.getAllItems("musicbrainArtistDaoTest").first()
+        val allItems = artistDao.getAllItems().first()
         assertEquals(allItems[0].asDomainArtist(), artist1)
     }
 
     @Test
     @Throws(Exception::class)
-    fun daoGetAllTasks_returnsAllTasksFromDB() = runBlocking {
+    fun daoGetAllArtists_returnsAllArtistsFromDB() = runBlocking {
         addTwoArtistsToDb()
-        val allItems = artistDao.getAllItems("musicbrainArtistDaoTest").first()
+        val allItems = artistDao.getAllItems().first()
         assertEquals(allItems[0].asDomainArtist(), artist1)
         assertEquals(allItems[1].asDomainArtist(), artist2)
     }

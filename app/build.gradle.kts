@@ -67,11 +67,6 @@ dependencies {
 
     implementation("androidx.compose.material3:material3-window-size-class")
 
-    //Mockk
-    testImplementation("io.mockk:mockk-android:1.13.8")
-    testImplementation("io.mockk:mockk-agent:1.13.8")
-    testImplementation("androidx.test:runner:1.5.2")
-
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")

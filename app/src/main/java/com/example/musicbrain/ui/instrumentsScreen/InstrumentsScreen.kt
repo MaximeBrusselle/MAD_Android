@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.musicbrain.ui.components.ListComponent
@@ -61,25 +62,35 @@ fun InstrumentsScreen(
                     Icon(
                         imageVector = Icons.Default.Close,
                         contentDescription = "Close Icon",
-                        modifier = modifier.clickable {
-                            if (instrumentsState.query.isNotEmpty()) {
-                                instrumentsViewModel.clearQuery()
-                                instrumentsViewModel.searchInstruments()
-                                instrumentsViewModel.setActive(false)
-                            }
+                        modifier = modifier
+                            .testTag("InstrumentsSearchClear")
+                            .clickable {
+                                if (instrumentsState.query.isNotEmpty()) {
+                                    instrumentsViewModel.clearQuery()
+                                    instrumentsViewModel.searchInstruments()
+                                    instrumentsViewModel.setActive(false)
+                                }
                         }
                     )
                 }
             },
             active = instrumentsState.active,
             onActiveChange = instrumentsViewModel::setActive,
-            modifier = modifier.fillMaxWidth(),
+            modifier = modifier
+                .fillMaxWidth()
+                .testTag("InstrumentsSearchBar")
+            ,
             onSearch = {
                 instrumentsViewModel.searchInstruments()
             }
         ) {
             if (instrumentsState.searchHistory.isEmpty()) {
-                Text("No recent searches", modifier = modifier.padding(8.dp))
+                Text(
+                    text = "No recent searches",
+                    modifier = modifier
+                        .padding(8.dp)
+                        .testTag("InstrumentsSearchHistoryEmpty")
+                )
             } else {
                 instrumentsState.searchHistory.reversed().forEach { query ->
                     Row(

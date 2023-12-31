@@ -27,9 +27,9 @@ interface MusicBrainApiService {
 
 }
 
-fun MusicBrainApiService.getArtistsResponseAsFlow(query: String = "a"): Flow<ArtistsResponse> = flow {
+fun MusicBrainApiService.getArtistsAsFlow(query: String = "a"): Flow<List<ApiArtist>> = flow {
     try {
-        emit(searchArtist(query))
+        emit(searchArtist(query).artists)
     }
     catch(e: HttpException){
         errorHandler(e.code(), "getArtistsResponseAsFlow", e.message())
@@ -45,9 +45,9 @@ fun MusicBrainApiService.getArtistAsFlow(id: String): Flow<ApiArtist> = flow {
     }
 }
 
-fun MusicBrainApiService.getInstrumentsResponseAsFlow(query: String = "a"): Flow<InstrumentsResponse> = flow {
+fun MusicBrainApiService.getInstrumentsAsFlow(query: String = "a"): Flow<List<ApiInstrument>> = flow {
     try {
-        emit(searchInstrument(query))
+        emit(searchInstrument(query).instruments)
     }
     catch(e: HttpException){
         errorHandler(e.code(), "getInstrumentsResponseAsFlow", e.message())

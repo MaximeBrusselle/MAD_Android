@@ -2,6 +2,7 @@ package com.example.musicbrain.viewmodels
 
 import com.example.musicbrain.TestDispatcherRule
 import com.example.musicbrain.fake.FakeApiInstrumentRepository
+import com.example.musicbrain.ui.instrumentsScreen.InstrumentsApiState
 import com.example.musicbrain.ui.instrumentsScreen.InstrumentsViewModel
 import org.junit.Assert
 import org.junit.Before
@@ -48,5 +49,17 @@ class InstrumentsViewModelTest {
         viewModel.updateQuery(searchQuery)
         viewModel.searchInstruments()
         Assert.assertEquals(viewModel.uiState.value.searchHistory[0], searchQuery)
+    }
+
+    @Test
+    fun stateAfterInitShouldBeSuccess() {
+        Assert.assertEquals(viewModel.instrumentsApiState, InstrumentsApiState.Success)
+    }
+
+    @Test
+    fun stateAfterSearchShouldBeSuccess() {
+        viewModel.updateQuery(searchQuery)
+        viewModel.searchInstruments()
+        Assert.assertEquals(viewModel.instrumentsApiState, InstrumentsApiState.Success)
     }
 }

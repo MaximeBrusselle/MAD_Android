@@ -1,6 +1,5 @@
 package com.example.musicbrain.ui.artistsScreen
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -52,7 +51,6 @@ fun ArtistsScreen(
             placeholder = {
                 Text(
                     text = "Search Artist",
-                    modifier = modifier.testTag("ArtistsSearchPlaceholder")
                 )
             },
             leadingIcon = {
@@ -73,14 +71,16 @@ fun ArtistsScreen(
                                     artistsViewModel.clearQuery()
                                     artistsViewModel.searchArtists()
                                     artistsViewModel.setActive(false)
+                                }
                             }
-                        }
                     )
                 }
             },
             active = artistsState.active,
             onActiveChange = artistsViewModel::setActive,
-            modifier = modifier.fillMaxWidth().testTag("ArtistsSearchBar"),
+            modifier = modifier
+                .fillMaxWidth()
+                .testTag("ArtistsSearchBar"),
             onSearch = {
                 artistsViewModel.searchArtists()
             }
@@ -107,10 +107,7 @@ fun ArtistsScreen(
                             imageVector = Icons.Default.History,
                             contentDescription = "History Icon",
                         )
-                        Text(
-                            text = query,
-                            modifier = modifier.testTag("ArtistsSearchHistory-$index")
-                        )
+                        Text(text = query)
                     }
                 }
             }
