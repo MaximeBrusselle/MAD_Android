@@ -11,6 +11,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 
 data class ListComponentItem(
@@ -26,7 +27,9 @@ fun ListComponent(
     modifier: Modifier = Modifier,
     tagStart: String
 ) {
-    Box {
+    Box(
+        modifier = modifier.testTag("${tagStart}Box")
+    ) {
         LazyColumn {
             val grouped = items.groupBy { it.name.first().uppercaseChar() }
             grouped.forEach { (initial, items) ->

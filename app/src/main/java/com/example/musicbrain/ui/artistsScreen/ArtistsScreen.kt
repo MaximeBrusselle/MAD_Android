@@ -1,5 +1,6 @@
 package com.example.musicbrain.ui.artistsScreen
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -49,7 +50,10 @@ fun ArtistsScreen(
             query = artistsState.query,
             onQueryChange = artistsViewModel::updateQuery,
             placeholder = {
-                Text("Search Artist")
+                Text(
+                    text = "Search Artist",
+                    modifier = modifier.testTag("ArtistsSearchPlaceholder")
+                )
             },
             leadingIcon = {
                 Icon(
@@ -62,11 +66,13 @@ fun ArtistsScreen(
                     Icon(
                         imageVector = Icons.Default.Close,
                         contentDescription = "Close Icon",
-                        modifier = modifier.clickable {
-                            if (artistsState.query.isNotEmpty()) {
-                                artistsViewModel.clearQuery()
-                                artistsViewModel.searchArtists()
-                                artistsViewModel.setActive(false)
+                        modifier = modifier
+                            .testTag("ArtistsSearchClear")
+                            .clickable {
+                                if (artistsState.query.isNotEmpty()) {
+                                    artistsViewModel.clearQuery()
+                                    artistsViewModel.searchArtists()
+                                    artistsViewModel.setActive(false)
                             }
                         }
                     )
@@ -80,9 +86,14 @@ fun ArtistsScreen(
             }
         ) {
             if (artistsState.searchHistory.isEmpty()) {
-                Text("No recent searches", modifier = modifier.padding(8.dp))
+                Text(
+                    text = "No recent searches",
+                    modifier = modifier
+                        .padding(8.dp)
+                        .testTag("ArtistsSearchHistoryEmpty")
+                )
             } else {
-                artistsState.searchHistory.reversed().forEach { query ->
+                artistsState.searchHistory.reversed().forEachIndexed { index, query ->
                     Row(
                         modifier = modifier
                             .fillMaxWidth()
@@ -96,7 +107,10 @@ fun ArtistsScreen(
                             imageVector = Icons.Default.History,
                             contentDescription = "History Icon",
                         )
-                        Text(query)
+                        Text(
+                            text = query,
+                            modifier = modifier.testTag("ArtistsSearchHistory-$index")
+                        )
                     }
                 }
             }
@@ -112,7 +126,9 @@ fun ArtistsScreen(
                 Text("Error")
             }
             ArtistsApiState.NotFound -> {
-                Text("Not Found")
+                Text(
+                    "Not Found",
+                )
             }
             ArtistsApiState.Success -> {
                 ListComponent(

@@ -19,10 +19,6 @@ import org.junit.Rule
 import org.junit.Test
 
 class NavigationTest {
-
-    private val someArtistSearchQuery: String = "Test"
-    private val someInstrumentSearchQuery: String = "piano"
-
     private val someArtistId: String = "ddf5393e-b242-404c-a141-a546b8357d3d"
     private val someInstrumentId: String = "bf6af06a-5033-4af5-a6b8-7f235b0cff51"
 

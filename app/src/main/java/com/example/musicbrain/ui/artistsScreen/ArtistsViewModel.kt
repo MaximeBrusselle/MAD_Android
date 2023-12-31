@@ -37,11 +37,11 @@ class ArtistsViewModel(private val artistRepository: ArtistRepository): ViewMode
         getApiArtists()
     }
 
-    private fun getApiArtists() {
+    fun getApiArtists() {
         try {
             viewModelScope.launch { artistRepository.refresh() }
 
-            uiListState = artistRepository.getArtists(query = _uiState.value.query).map { ArtistListState(it) }
+            uiListState = artistRepository.getArtists().map { ArtistListState(it) }
                 .stateIn(
                     scope = viewModelScope,
                     started = SharingStarted.WhileSubscribed(5_000L),
@@ -76,6 +76,9 @@ class ArtistsViewModel(private val artistRepository: ArtistRepository): ViewMode
                         active = false,
                         searchHistory = it.searchHistory + it.query
                     )
+                }
+                if (uiListState.value.artists.isEmpty()) {
+                    artistsApiState = ArtistsApiState.NotFound
                 }
                 artistsApiState = ArtistsApiState.Success
             } catch (e: IOException) {

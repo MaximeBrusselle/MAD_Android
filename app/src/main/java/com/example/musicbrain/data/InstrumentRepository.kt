@@ -19,7 +19,7 @@ import java.net.SocketTimeoutException
 
 interface InstrumentRepository {
 
-    fun getInstruments(query: String? = "a"): Flow<List<Instrument>>
+    fun getInstruments(query: String? = ""): Flow<List<Instrument>>
     fun getInstrument(id: String): Flow<Instrument>
     suspend fun refreshSearch(search: String)
     suspend fun refresh()
@@ -30,11 +30,11 @@ interface InstrumentRepository {
 class ApiInstrumentsRepository(private val instrumentDao: InstrumentDao, private val musicbrainApiService: MusicBrainApiService) : InstrumentRepository {
 
     override fun getInstruments(query: String?): Flow<List<Instrument>> {
-        return instrumentDao.getAllItems("%$query%").map {
+        return instrumentDao.getAllItems("$query").map {
             it.asDomainInstruments()
         }.onEach {
             if (it.isEmpty()) {
-                refreshSearch(query ?: "a")
+                refreshSearch(query ?: "")
             }
         }
     }

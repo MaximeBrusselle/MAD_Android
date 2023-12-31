@@ -19,7 +19,7 @@ import java.net.SocketTimeoutException
 
 interface ArtistRepository {
 
-    fun getArtists(query: String? = "a"): Flow<List<Artist>>
+    fun getArtists(query: String? = ""): Flow<List<Artist>>
     fun getArtist(id: String): Flow<Artist>
     suspend fun refreshSearch(search: String)
     suspend fun refresh()
@@ -30,11 +30,11 @@ interface ArtistRepository {
 class ApiArtistsRepository(private val artistDao: ArtistDao, private val musicbrainApiService: MusicBrainApiService) : ArtistRepository {
 
     override fun getArtists(query: String?): Flow<List<Artist>> {
-        return artistDao.getAllItems("%$query%").map {
+        return artistDao.getAllItems("$query").map {
             it.asDomainArtists()
         }.onEach {
             if (it.isEmpty()) {
-                refreshSearch(query ?: "a")
+                refreshSearch(query ?: "")
             }
         }
     }

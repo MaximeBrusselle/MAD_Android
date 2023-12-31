@@ -18,7 +18,6 @@ fun ItemComponent(
     toDetailPage: (id: String) -> Unit,
     tagStart: String
 ) {
-    Log.d("ItemComponent", "$tagStart-${item.id}")
     Row(
         modifier = Modifier
             .fillMaxWidth()

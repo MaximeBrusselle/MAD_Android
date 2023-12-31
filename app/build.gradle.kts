@@ -67,6 +67,11 @@ dependencies {
 
     implementation("androidx.compose.material3:material3-window-size-class")
 
+    //Mockk
+    testImplementation("io.mockk:mockk-android:1.13.8")
+    testImplementation("io.mockk:mockk-agent:1.13.8")
+    testImplementation("androidx.test:runner:1.5.2")
+
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
@@ -79,17 +84,7 @@ dependencies {
     implementation("androidx.room:room-ktx:$room_version")
     // To use Kotlin Symbol Processing (KSP)
     ksp("androidx.room:room-compiler:$room_version")
-
-    //camera
-
-    val camerax_version = "1.3.0"
-    implementation( "androidx.camera:camera-core:${camerax_version}")
-    implementation( "androidx.camera:camera-camera2:${camerax_version}")
-    implementation( "androidx.camera:camera-lifecycle:${camerax_version}")
-    implementation( "androidx.camera:camera-video:${camerax_version}")
-
-    implementation( "androidx.camera:camera-view:${camerax_version}")
-    implementation( "androidx.camera:camera-extensions:${camerax_version}")
+    implementation("androidx.room:room-ktx:$room_version")
 
     //workers
     implementation("androidx.work:work-runtime-ktx:2.9.0")
