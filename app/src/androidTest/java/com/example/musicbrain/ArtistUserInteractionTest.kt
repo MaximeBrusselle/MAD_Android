@@ -19,20 +19,54 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
+/**
+ * Instrumented test to test all user interaction for [ArtistsScreen], which will execute on an Android device.
+ *
+ * See [testing documentation](http://d.android.com/tools/testing).
+ */
 class ArtistUserInteractionTest {
+    /**
+     * The example search query to use for testing.
+     */
     private val exampleSearchQuery: String = "DEEZL"
+
+    /**
+     * The tag to use for the searched artist.
+     */
     private val searchedTag: String = "Artist-bc810ce5-7c02-4856-a704-ea0126b3ccfa"
+
+    /**
+     * The ID of an artist to use for testing.
+     */
     private val someArtistId: String = "1b05edc2-6fb2-4242-a8f4-d6f9795cbc7a"
 
+    /**
+     * The [UiDevice] to use for testing.
+     */
     private lateinit var device: UiDevice
+
+    /**
+     * The fake repository to use for testing.
+     */
     private lateinit var fakeRepository: ArtistRepository
+
+    /**
+     * The [ArtistsViewModel] to use for testing.
+     */
     private lateinit var viewModel: ArtistsViewModel
 
+    /**
+     * The [Rule] to use for testing.
+     */
     @get:Rule
     val composeTestRule = createComposeRule()
 
+    /**
+     * Setup method to initialize the fake repository, view model, and set up the ComposeTestRule
+     * with the [ArtistsScreen].
+     */
     @Before
-    fun setupAppNavHost() {
+    fun setUpApp() {
         fakeRepository = FakeApiArtistRepository()
         viewModel = ArtistsViewModel(fakeRepository)
 
@@ -42,6 +76,9 @@ class ArtistUserInteractionTest {
         device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
     }
 
+    /**
+     * Test to verify that the ArtistsScreen contains a search bar, and it is initially displayed.
+     */
     @Test
     fun verifyArtistsScreenHasSearchbar() {
         composeTestRule
@@ -49,8 +86,11 @@ class ArtistUserInteractionTest {
             .assertIsDisplayed()
     }
 
+    /**
+     * Test to verify that the search history is initially empty.
+     */
     @Test
-    fun searchHistoryIsInitallyEmpty() {
+    fun searchHistoryIsInitiallyEmpty() {
         composeTestRule
             .onNodeWithTag("ArtistsSearchBar")
             .assertIsDisplayed()
@@ -62,6 +102,9 @@ class ArtistUserInteractionTest {
             .assertIsDisplayed()
     }
 
+    /**
+     * Test to verify that searching for an artist gives the correct result.
+     */
     @OptIn(ExperimentalTestApi::class)
     @Test
     fun searchArtistGivesCorrectResult() {
@@ -87,6 +130,10 @@ class ArtistUserInteractionTest {
             )
     }
 
+    /**
+     * Test to verify that searching for an artist adds it to the search history.
+     * Also tests if pressing on a history item results in a search.
+     */
     @OptIn(ExperimentalTestApi::class)
     @Test
     fun searchHistoryResultsInQuery() {
@@ -130,6 +177,9 @@ class ArtistUserInteractionTest {
             )
     }
 
+    /**
+     * Test to verify that the cancel button works while searching.
+     */
     @Test
     fun verifyCancelButtonWorks() {
         Thread.sleep(1000)
@@ -159,6 +209,9 @@ class ArtistUserInteractionTest {
             .assertIsDisplayed()
     }
 
+    /**
+     * Test to verify that the cancel button works after performing a search.
+     */
     @OptIn(ExperimentalTestApi::class)
     @Test
     fun verifyCancelButtonWorksAfterSearch() {

@@ -8,10 +8,23 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
+/**
+ * Tests for [ApiArtistRepository]
+ */
 class ApiArtistRepositoryTest {
+    /**
+     * The ID of an artist to use for testing.
+     */
     private var testId = "bc810ce5-7c02-4856-a704-ea0126b3ccfa"
+
+    /**
+     * The search term to use for testing.
+     */
     private var testSearch = "DEEZL"
 
+    /**
+     * Tests [ApiArtistRepository.getArtists]
+     */
     @Test
     fun apiArtistRepository_getArtists_verifyArtistsList() =
         runTest {
@@ -19,6 +32,9 @@ class ApiArtistRepositoryTest {
             assertEquals(FakeDataSource.apiArtists.map { it.asDomainObject() }, repository.getArtists().first())
         }
 
+    /**
+     * Tests [ApiArtistRepository.getArtist]
+     */
     @Test
     fun apiArtistRepository_getArtist_verifyArtist() =
         runTest {
@@ -29,6 +45,9 @@ class ApiArtistRepositoryTest {
             )
         }
 
+    /**
+     * Tests [ApiArtistRepository.searchArtists]
+     */
     @Test
     fun apiArtistRepository_searchArtists_verifyArtistsList() =
         runTest {
@@ -41,6 +60,9 @@ class ApiArtistRepositoryTest {
             )
         }
 
+    /**
+     * Tests [ApiArtistRepository.refresh]
+     */
     @Test
     fun apiArtistRepository_refresh_verifyArtistsList() =
         runTest {
@@ -49,6 +71,9 @@ class ApiArtistRepositoryTest {
             assertEquals(FakeDataSource.apiArtists.map { it.asDomainObject() }, repository.getArtists().first())
         }
 
+    /**
+     * Tests [ApiArtistRepository.refreshSearch]
+     */
     @Test
     fun apiArtistRepository_refreshSearch_verifyArtistsList() =
         runTest {
@@ -62,6 +87,9 @@ class ApiArtistRepositoryTest {
             )
         }
 
+    /**
+     * Tests [ApiArtistRepository.refreshOne]
+     */
     @Test
     fun apiArtistRepository_refreshOne_verifyArtist() =
         runTest {

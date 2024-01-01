@@ -15,6 +15,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
+/**
+ * Light color scheme for the application.
+ */
 private val LightColors =
     lightColorScheme(
         primary = md_theme_light_primary,
@@ -48,6 +51,9 @@ private val LightColors =
         scrim = md_theme_light_scrim,
     )
 
+/**
+ * Dark color scheme for the application.
+ */
 private val DarkColors =
     darkColorScheme(
         primary = md_theme_dark_primary,
@@ -81,6 +87,13 @@ private val DarkColors =
         scrim = md_theme_dark_scrim,
     )
 
+/**
+ * Composable function that sets up the MusicBrain theme.
+ *
+ * @param darkTheme Boolean indicating whether the theme should be dark.
+ * @param dynamicColor Boolean indicating whether dynamic color is enabled (available on Android 12+).
+ * @param content Content to be displayed within the theme.
+ */
 @Composable
 fun MusicBrainTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),

@@ -15,6 +15,13 @@ import androidx.navigation.NavDestination
 import com.example.musicbrain.R
 import com.example.musicbrain.ui.navigation.NavigationRoutes
 
+/**
+ * Composable that represents the content of the navigation drawer.
+ *
+ * @param selectedDestination The currently selected navigation destination.
+ * @param onTabPressed Callback to handle tab selection.
+ * @param modifier Modifier for styling and layout customization.
+ */
 @Composable
 fun NavigationDrawerContent(
     selectedDestination: NavDestination?,

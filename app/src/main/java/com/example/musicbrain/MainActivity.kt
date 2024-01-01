@@ -13,19 +13,23 @@ import com.example.musicbrain.ui.MusicBrain
 import com.example.musicbrain.ui.theme.MusicBrainTheme
 import com.example.musicbrain.ui.util.MusicBrainNavigationType
 
+/**
+ * Main activity for the MusicBrain application.
+ */
 class MainActivity : ComponentActivity() {
+    /**
+     * Called when the activity is starting.
+     */
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MusicBrainTheme {
-                // create a Surface to overlap image and texts
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = androidx.compose.material3.MaterialTheme.colorScheme.background,
                 ) {
                     val windowSize = calculateWindowSizeClass(activity = this)
-                    // Image(painter = painterResource(id = R.drawable.musicbrain), contentDescription = "MusicBrain", contentScale = ContentScale.Crop)
                     when (windowSize.widthSizeClass) {
                         WindowWidthSizeClass.Compact -> {
                             MusicBrain(MusicBrainNavigationType.BOTTOM_NAVIGATION)

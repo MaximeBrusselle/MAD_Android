@@ -10,6 +10,13 @@ import androidx.compose.ui.platform.testTag
 import androidx.navigation.NavDestination
 import com.example.musicbrain.ui.navigation.NavigationRoutes
 
+/**
+ * Composable that represents a vertical navigation rail.
+ *
+ * @param selectedDestination The currently selected navigation destination.
+ * @param onTabPressed Callback to handle tab selection.
+ * @param modifier Modifier for styling and layout customization.
+ */
 @Composable
 fun NavigationRail(
     selectedDestination: NavDestination?,

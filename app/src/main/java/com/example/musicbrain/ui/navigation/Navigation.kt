@@ -10,6 +10,12 @@ import com.example.musicbrain.ui.artistsScreen.ArtistsScreen
 import com.example.musicbrain.ui.instrumentDetailScreen.InstrumentDetailScreen
 import com.example.musicbrain.ui.instrumentsScreen.InstrumentsScreen
 
+/**
+ * Composable function to define the navigation structure using Jetpack Compose Navigation.
+ *
+ * @param navController NavHostController used for navigating between destinations.
+ * @param modifier Modifier for styling the NavHost.
+ */
 @Composable
 fun Navigation(
     navController: NavHostController,

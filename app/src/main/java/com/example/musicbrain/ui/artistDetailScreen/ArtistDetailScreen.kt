@@ -18,6 +18,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -31,20 +32,25 @@ import com.example.musicbrain.model.Artist
 import com.example.musicbrain.ui.components.DetailImage
 import com.example.musicbrain.ui.components.InfoRow
 
+/**
+ * Composable function for displaying the screen that shows details of a specific artist.
+ *
+ * @param artistId The unique identifier of the artist.
+ * @param onBack Callback function to be invoked when the back button is clicked.
+ * @param detailViewModel The [ArtistDetailViewModel] used for managing the artist details.
+ */
 @Composable
 fun ArtistDetailScreen(
     artistId: String,
     onBack: () -> Unit,
-    detailViewModel: ArtistDetailViewModel =
-        viewModel(
-            factory = ArtistDetailViewModel.Factory,
-        ),
+    detailViewModel: ArtistDetailViewModel = viewModel(factory = ArtistDetailViewModel.Factory),
 ) {
     LaunchedEffect(artistId) {
         detailViewModel.getApiArtist(artistId = artistId)
     }
 
     val artist by detailViewModel.artist.collectAsState()
+
     Column {
         Row {
             Icon(
@@ -52,12 +58,12 @@ fun ArtistDetailScreen(
                 contentDescription = "Back",
                 modifier =
                     Modifier
-                        .clickable {
-                            onBack()
-                        }
-                        .padding(8.dp),
+                        .clickable { onBack() }
+                        .padding(8.dp)
+                        .testTag("BackButton"),
             )
         }
+
         when (detailViewModel.artistApiState) {
             ArtistApiState.Success ->
                 artist?.let {
@@ -72,6 +78,12 @@ fun ArtistDetailScreen(
     }
 }
 
+/**
+ * Composable function for displaying detailed information about an artist.
+ *
+ * @param artist The [Artist] object containing artist details.
+ * @param modifier The modifier for this composable.
+ */
 @Composable
 fun ArtistDetail(
     artist: Artist,
@@ -105,7 +117,6 @@ fun ArtistDetail(
                 )
             }
         }
-
         Text(
             artist.name,
             style =
@@ -123,7 +134,6 @@ fun ArtistDetail(
                     .fillMaxWidth(),
         )
         Divider()
-
         InfoRow(
             field = stringResource(id = R.string.disambiguation),
             value = artist.disambiguation,

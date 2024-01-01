@@ -8,10 +8,23 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
+/**
+ * Tests for [ApiInstrumentRepository]
+ */
 class ApiInstrumentRepositoryTest {
+    /**
+     * The ID of an instrument to use for testing.
+     */
     private var testId = "b3eac5f9-7859-4416-ac39-7154e2e8d348"
+
+    /**
+     * The search term to use for testing.
+     */
     private var testSearch = "piano"
 
+    /**
+     * Tests [ApiInstrumentRepository.getInstruments]
+     */
     @Test
     fun apiInstrumentRepository_getInstruments_verifyInstrumentsList() =
         runTest {
@@ -19,6 +32,9 @@ class ApiInstrumentRepositoryTest {
             assertEquals(FakeDataSource.apiInstruments.map { it.asDomainObject() }, repository.getInstruments().first())
         }
 
+    /**
+     * Tests [ApiInstrumentRepository.getInstrument]
+     */
     @Test
     fun apiInstrumentRepository_getInstrument_verifyInstrument() =
         runTest {
@@ -29,6 +45,9 @@ class ApiInstrumentRepositoryTest {
             )
         }
 
+    /**
+     * Tests [ApiInstrumentRepository.searchInstruments]
+     */
     @Test
     fun apiInstrumentRepository_searchInstruments_verifyInstrumentsList() =
         runTest {
@@ -41,6 +60,9 @@ class ApiInstrumentRepositoryTest {
             )
         }
 
+    /**
+     * Tests [ApiInstrumentRepository.refresh]
+     */
     @Test
     fun apiInstrumentRepository_refresh_verifyInstrumentsList() =
         runTest {
@@ -49,6 +71,9 @@ class ApiInstrumentRepositoryTest {
             assertEquals(FakeDataSource.apiInstruments.map { it.asDomainObject() }, repository.getInstruments().first())
         }
 
+    /**
+     * Tests [ApiInstrumentRepository.refreshSearch]
+     */
     @Test
     fun apiInstrumentRepository_refreshSearch_verifyInstrumentsList() =
         runTest {
@@ -62,6 +87,9 @@ class ApiInstrumentRepositoryTest {
             )
         }
 
+    /**
+     * Tests [ApiInstrumentRepository.refreshOne]
+     */
     @Test
     fun apiInstrumentRepository_refreshOne_verifyInstrument() =
         runTest {

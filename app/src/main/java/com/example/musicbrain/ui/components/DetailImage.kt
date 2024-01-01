@@ -10,6 +10,12 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
+/**
+ * Custom composable for displaying an image in the detail screen.
+ *
+ * @param id The resource ID of the image.
+ * @param contentDescription The content description for accessibility.
+ */
 @Composable
 fun DetailImage(
     id: Int,

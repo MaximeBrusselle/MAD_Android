@@ -19,6 +19,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -32,6 +33,13 @@ import com.example.musicbrain.model.Instrument
 import com.example.musicbrain.ui.components.DetailImage
 import com.example.musicbrain.ui.components.InfoRow
 
+/**
+ * Composable representing the screen for displaying details of a specific instrument.
+ *
+ * @param instrumentId The unique identifier of the instrument to be displayed.
+ * @param onBack Callback to handle the back navigation.
+ * @param detailViewModel ViewModel providing the instrument details.
+ */
 @Composable
 fun InstrumentDetailScreen(
     instrumentId: String,
@@ -56,7 +64,8 @@ fun InstrumentDetailScreen(
                         .clickable {
                             onBack()
                         }
-                        .padding(8.dp),
+                        .padding(8.dp)
+                        .testTag("BackButton"),
             )
         }
         when (detailViewModel.instrumentApiState) {
@@ -73,6 +82,12 @@ fun InstrumentDetailScreen(
     }
 }
 
+/**
+ * Composable for displaying detailed information about an instrument.
+ *
+ * @param instrument The instrument data to be displayed.
+ * @param modifier Modifier for styling and layout customization.
+ */
 @Composable
 fun InstrumentDetail(
     instrument: Instrument,

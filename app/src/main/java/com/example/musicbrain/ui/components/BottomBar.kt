@@ -17,10 +17,16 @@ import androidx.compose.ui.res.stringResource
 import com.example.musicbrain.R
 import com.example.musicbrain.ui.navigation.NavigationRoutes
 
+/**
+ * Custom Bottom Bar component for navigation within the application.
+ *
+ * @param goToArtists Callback to navigate to the Artists screen.
+ * @param goToInstruments Callback to navigate to the Genres screen.
+ */
 @Composable
 fun BottomBar(
     goToArtists: () -> Unit,
-    goToGenres: () -> Unit,
+    goToInstruments: () -> Unit,
 ) {
     var selectedItemIndex by rememberSaveable {
         mutableIntStateOf(0)
@@ -51,10 +57,11 @@ fun BottomBar(
                 ),
             modifier = Modifier.testTag("NavigateToArtistsBottom"),
         )
+
         NavigationBarItem(
             selected = selectedItemIndex == 1,
             onClick = {
-                goToGenres()
+                goToInstruments()
                 selectedItemIndex = 1
             },
             icon = {

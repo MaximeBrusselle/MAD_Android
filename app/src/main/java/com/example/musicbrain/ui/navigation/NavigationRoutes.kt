@@ -7,6 +7,12 @@ import androidx.compose.material.icons.filled.Piano
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.musicbrain.R
 
+/**
+ * Enum class representing the navigation routes in the application.
+ *
+ * @param title String resource ID for the title of the route.
+ * @param icon ImageVector representing the icon associated with the route.
+ */
 enum class NavigationRoutes(
     @StringRes val title: Int,
     val icon: ImageVector,
@@ -15,6 +21,9 @@ enum class NavigationRoutes(
     Instruments(R.string.genresRoute, Icons.Default.Piano),
 }
 
+/**
+ * Object containing constants for destination routes in the application.
+ */
 object Destinations {
     const val ARTISTS = "Artists"
     const val INSTRUMENTS = "Instruments"

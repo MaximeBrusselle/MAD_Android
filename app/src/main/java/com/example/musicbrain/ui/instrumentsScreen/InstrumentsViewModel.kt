@@ -19,17 +19,31 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.io.IOException
 
-class InstrumentsViewModel(private val instrumentRepository: InstrumentRepository) : ViewModel() {
+class InstrumentsViewModel(
+    private val instrumentRepository: InstrumentRepository,
+) : ViewModel() {
+    /*
+     * Mutable state flow to hold the ui state.
+     */
     private val _uiState =
         MutableStateFlow(
             InstrumentsState(),
         )
+
+    /**
+     * Public state flow to hold the ui state.
+     */
     val uiState: StateFlow<InstrumentsState> = _uiState.asStateFlow()
+
+    /**
+     * Public state flow to observe the instruments.
+     */
     lateinit var uiListState: StateFlow<InstrumentListState>
 
-    // initial value is Loading
+    /**
+     * State representing the API call status for the instruments.
+     */
     var instrumentsApiState: InstrumentsApiState by mutableStateOf(InstrumentsApiState.Loading)
         private set
 
@@ -37,8 +51,11 @@ class InstrumentsViewModel(private val instrumentRepository: InstrumentRepositor
         getApiInstruments()
     }
 
+    /**
+     * Function to retrieve instruments from the API and update the state accordingly.
+     */
     private fun getApiInstruments() {
-        try {
+        runCatching {
             viewModelScope.launch { instrumentRepository.refresh() }
 
             uiListState =
@@ -48,21 +65,22 @@ class InstrumentsViewModel(private val instrumentRepository: InstrumentRepositor
                         started = SharingStarted.WhileSubscribed(5_000L),
                         initialValue = InstrumentListState(),
                     )
-            if (uiListState.value.instruments.isEmpty()) {
-                instrumentsApiState = InstrumentsApiState.NotFound
-            }
+        }.onSuccess {
             instrumentsApiState = InstrumentsApiState.Success
-        } catch (e: IOException) {
+        }.onFailure { e ->
             Log.e("InstrumentsViewModel", "getApiInstruments: ${e.message}")
             instrumentsApiState = InstrumentsApiState.Error
         }
     }
 
+    /**
+     * Function to search for instruments based on the user's query.
+     */
     fun searchInstruments() {
         if (_uiState.value.query.isEmpty()) {
             getApiInstruments()
         } else {
-            try {
+            runCatching {
                 viewModelScope.launch { instrumentRepository.refreshSearch(_uiState.value.query) }
 
                 uiListState =
@@ -79,14 +97,18 @@ class InstrumentsViewModel(private val instrumentRepository: InstrumentRepositor
                         searchHistory = it.searchHistory + it.query,
                     )
                 }
+            }.onSuccess {
                 instrumentsApiState = InstrumentsApiState.Success
-            } catch (e: IOException) {
+            }.onFailure { e ->
                 Log.e("InstrumentsViewModel", "searchInstruments: ${e.message}")
                 instrumentsApiState = InstrumentsApiState.Error
             }
         }
     }
 
+    /**
+     * Function to update the search query in the UI state.
+     */
     fun updateQuery(text: String) {
         _uiState.update {
             it.copy(
@@ -95,6 +117,9 @@ class InstrumentsViewModel(private val instrumentRepository: InstrumentRepositor
         }
     }
 
+    /**
+     * Function to clear the search query in the UI state.
+     */
     fun clearQuery() {
         _uiState.update {
             it.copy(
@@ -103,6 +128,9 @@ class InstrumentsViewModel(private val instrumentRepository: InstrumentRepositor
         }
     }
 
+    /**
+     * Function to set the active state in the UI state.
+     */
     fun setActive(active: Boolean) {
         _uiState.update {
             it.copy(
@@ -112,16 +140,23 @@ class InstrumentsViewModel(private val instrumentRepository: InstrumentRepositor
     }
 
     companion object {
-        private var Instance: InstrumentsViewModel? = null
+        /*
+         * Singleton instance to ensure a single instance of the ViewModel.
+         */
+        private var instance: InstrumentsViewModel? = null
+
+        /**
+         * Factory for creating the ViewModel.
+         */
         val Factory: ViewModelProvider.Factory =
             viewModelFactory {
                 initializer {
-                    if (Instance == null) {
+                    if (instance == null) {
                         val application = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as MusicBrainApplication)
                         val instrumentRepository = application.container.instrumentRepository
-                        Instance = InstrumentsViewModel(instrumentRepository = instrumentRepository)
+                        instance = InstrumentsViewModel(instrumentRepository = instrumentRepository)
                     }
-                    Instance!!
+                    instance!!
                 }
             }
     }

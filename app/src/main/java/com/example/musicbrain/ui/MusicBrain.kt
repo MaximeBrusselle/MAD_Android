@@ -30,6 +30,12 @@ import com.example.musicbrain.ui.navigation.Navigation
 import com.example.musicbrain.ui.navigation.NavigationRoutes
 import com.example.musicbrain.ui.util.MusicBrainNavigationType
 
+/**
+ * Composable function representing the main MusicBrain UI.
+ *
+ * @param navigationType Type of navigation to use (Permanent Navigation Drawer, Bottom Navigation, or Navigation Rail).
+ * @param navController Navigation controller to handle navigation within the app.
+ */
 @Composable
 fun MusicBrain(
     navigationType: MusicBrainNavigationType,

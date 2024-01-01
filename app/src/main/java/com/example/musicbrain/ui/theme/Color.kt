@@ -2,6 +2,9 @@ package com.example.musicbrain.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
+/**
+ * Light colors
+ */
 val md_theme_light_primary = Color(0xFF8D4F00)
 val md_theme_light_onPrimary = Color(0xFFFFFFFF)
 val md_theme_light_primaryContainer = Color(0xFFFFDCC0)
@@ -32,6 +35,9 @@ val md_theme_light_surfaceTint = Color(0xFF8D4F00)
 val md_theme_light_outlineVariant = Color(0xFFD5C3B6)
 val md_theme_light_scrim = Color(0xFF000000)
 
+/**
+ * Dark colors
+ */
 val md_theme_dark_primary = Color(0xFFFFB877)
 val md_theme_dark_onPrimary = Color(0xFF4B2700)
 val md_theme_dark_primaryContainer = Color(0xFF6C3B00)

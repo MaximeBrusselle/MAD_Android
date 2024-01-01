@@ -15,6 +15,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+/**
+ * Custom composable for displaying an information row with a field and its corresponding value.
+ *
+ * @param field The title or label representing the information.
+ * @param value The value associated with the information.
+ */
 @Composable
 fun InfoRow(
     field: String,
@@ -39,6 +45,7 @@ fun InfoRow(
                 ),
             textAlign = TextAlign.Start,
         )
+
         Text(
             text = value,
             style = MaterialTheme.typography.bodyLarge,

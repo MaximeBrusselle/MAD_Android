@@ -11,6 +11,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 
+/**
+ * Custom composable for displaying an item component with details such as name and type.
+ *
+ * @param item The data class representing the item's information.
+ * @param toDetailPage Callback function to navigate to the detail page with the item's ID.
+ * @param tagStart The tag prefix for testing purposes.
+ */
 @Composable
 fun ItemComponent(
     item: ListComponentItem,
@@ -29,6 +36,7 @@ fun ItemComponent(
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         Text(item.name)
+
         Text(text = item.type)
     }
 }

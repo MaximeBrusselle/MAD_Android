@@ -26,6 +26,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.musicbrain.ui.components.ListComponent
 import com.example.musicbrain.ui.components.ListComponentItem
 
+/**
+ * Composable function representing the Instruments screen.
+ *
+ * @param toDetailPage Lambda function for navigating to the instrument detail page.
+ * @param modifier Modifier for styling the composable.
+ * @param instrumentsViewModel ViewModel for managing instrument-related data.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InstrumentsScreen(

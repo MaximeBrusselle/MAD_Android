@@ -19,18 +19,52 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
+/**
+ * Instrumented test to test all user interaction for [InstrumentsScreen], which will execute on an Android device.
+ *
+ * See [testing documentation](http://d.android.com/tools/testing).
+ */
 class InstrumentUserInteractionTest {
+    /**
+     * The example search query to use for testing.
+     */
     private val exampleSearchQuery: String = "piano"
+
+    /**
+     * The tag to use for the searched instrument.
+     */
     private val searchedTag: String = "Instrument-b3eac5f9-7859-4416-ac39-7154e2e8d348"
+
+    /**
+     * The ID of an instrument to use for testing.
+     */
     private val someInstrumentId: String = "1c8f9780-2f16-4891-b66d-bb7aa0820dbd"
 
+    /**
+     * The [UiDevice] to use for testing.
+     */
     private lateinit var device: UiDevice
+
+    /**
+     * The fake repository to use for testing.
+     */
     private lateinit var fakeRepository: InstrumentRepository
+
+    /**
+     * The [InstrumentsViewModel] to use for testing.
+     */
     private lateinit var viewModel: InstrumentsViewModel
 
+    /**
+     * The [Rule] to use for testing.
+     */
     @get:Rule
     val composeTestRule = createComposeRule()
 
+    /**
+     * Setup method to initialize the fake repository, view model, and set up the ComposeTestRule
+     * with the [InstrumentsScreen].
+     */
     @Before
     fun setupAppNavHost() {
         fakeRepository = FakeApiInstrumentRepository()
@@ -41,6 +75,9 @@ class InstrumentUserInteractionTest {
         device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
     }
 
+    /**
+     * Test to verify that the InstrumentsScreen contains a search bar, and it is initially displayed.
+     */
     @Test
     fun verifyInstrumentsScreenHasSearchbar() {
         composeTestRule
@@ -48,8 +85,11 @@ class InstrumentUserInteractionTest {
             .assertIsDisplayed()
     }
 
+    /**
+     * Test to verify that the search history is initially empty.
+     */
     @Test
-    fun searchHistoryIsInitallyEmpty()  {
+    fun searchHistoryIsInitiallyEmpty() {
         composeTestRule
             .onNodeWithTag("InstrumentsSearchBar")
             .assertIsDisplayed()
@@ -61,6 +101,9 @@ class InstrumentUserInteractionTest {
             .assertIsDisplayed()
     }
 
+    /**
+     * Test to verify that searching for an instrument gives the correct result.
+     */
     @OptIn(ExperimentalTestApi::class)
     @Test
     fun searchInstrumentGivesCorrectResult() {
@@ -85,6 +128,10 @@ class InstrumentUserInteractionTest {
             )
     }
 
+    /**
+     * Test to verify that searching for an instrument adds it to the search history.
+     * Also tests if pressing on a history item results in a search.
+     */
     @OptIn(ExperimentalTestApi::class)
     @Test
     fun searchHistoryResultsInQuery() {
@@ -126,6 +173,9 @@ class InstrumentUserInteractionTest {
             )
     }
 
+    /**
+     * Test to verify that the cancel button works while searching.
+     */
     @Test
     fun verifyCancelButtonWorks() {
         composeTestRule
@@ -153,6 +203,9 @@ class InstrumentUserInteractionTest {
             .assertIsDisplayed()
     }
 
+    /**
+     * Test to verify that the cancel button works after performing a search.
+     */
     @OptIn(ExperimentalTestApi::class)
     @Test
     fun verifyCancelButtonWorksAfterSearch() {

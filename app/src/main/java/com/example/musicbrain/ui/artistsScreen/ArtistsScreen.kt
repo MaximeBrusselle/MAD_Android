@@ -26,6 +26,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.musicbrain.ui.components.ListComponent
 import com.example.musicbrain.ui.components.ListComponentItem
 
+/**
+ * Composable function representing the Artists screen.
+ *
+ * @param toDetailPage Lambda function for navigating to the artist detail page.
+ * @param modifier Modifier for styling the composable.
+ * @param artistsViewModel ViewModel for managing artists-related data.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArtistsScreen(
@@ -38,7 +45,6 @@ fun ArtistsScreen(
 ) {
     val artistsState by artistsViewModel.uiState.collectAsState()
     val artistListState by artistsViewModel.uiListState.collectAsState()
-
     val artistApiState = artistsViewModel.artistsApiState
 
     Column(
@@ -118,9 +124,7 @@ fun ArtistsScreen(
                 }
             }
         }
-
         Spacer(modifier = modifier.height(16.dp))
-
         when (artistApiState) {
             ArtistsApiState.Loading -> {
                 Text("Loading...")

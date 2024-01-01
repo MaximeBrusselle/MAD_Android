@@ -9,6 +9,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 
+/**
+ * Custom AppBar component for the application.
+ *
+ * @param currentScreenTitle The title to be displayed on the app bar.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppBar(currentScreenTitle: String) {
