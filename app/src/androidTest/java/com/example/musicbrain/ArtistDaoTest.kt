@@ -41,10 +41,11 @@ class ArtistDaoTest {
         val context: Context = ApplicationProvider.getApplicationContext()
         // Using an in-memory database because the information stored here disappears when the
         // process is killed.
-        musicDb = Room.inMemoryDatabaseBuilder(context, MusicDb::class.java)
-            // Allowing main thread queries, just for testing.
-            .allowMainThreadQueries()
-            .build()
+        musicDb =
+            Room.inMemoryDatabaseBuilder(context, MusicDb::class.java)
+                // Allowing main thread queries, just for testing.
+                .allowMainThreadQueries()
+                .build()
         artistDao = musicDb.artistDao()
     }
 
@@ -56,18 +57,20 @@ class ArtistDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun daoInert_insertArtistIntoDB() = runBlocking {
-        addOneArtistToDb()
-        val allItems = artistDao.getAllItems().first()
-        assertEquals(allItems[0].asDomainArtist(), artist1)
-    }
+    fun daoInert_insertArtistIntoDB() =
+        runBlocking {
+            addOneArtistToDb()
+            val allItems = artistDao.getAllItems().first()
+            assertEquals(allItems[0].asDomainArtist(), artist1)
+        }
 
     @Test
     @Throws(Exception::class)
-    fun daoGetAllArtists_returnsAllArtistsFromDB() = runBlocking {
-        addTwoArtistsToDb()
-        val allItems = artistDao.getAllItems().first()
-        assertEquals(allItems[0].asDomainArtist(), artist1)
-        assertEquals(allItems[1].asDomainArtist(), artist2)
-    }
+    fun daoGetAllArtists_returnsAllArtistsFromDB() =
+        runBlocking {
+            addTwoArtistsToDb()
+            val allItems = artistDao.getAllItems().first()
+            assertEquals(allItems[0].asDomainArtist(), artist1)
+            assertEquals(allItems[1].asDomainArtist(), artist2)
+        }
 }

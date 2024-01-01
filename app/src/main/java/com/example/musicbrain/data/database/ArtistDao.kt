@@ -11,20 +11,20 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ArtistDao {
     @Query("SELECT * from artists WHERE id = :id")
-    fun getItem(id: String): Flow<dbArtist>
+    fun getItem(id: String): Flow<DbArtist>
 
     @Query("SELECT * from artists ORDER BY name COLLATE NOCASE ASC ")
-    fun getAllItems(): Flow<List<dbArtist>>
+    fun getAllItems(): Flow<List<DbArtist>>
 
     @Query("SELECT * from artists WHERE name LIKE :search  ORDER BY name COLLATE NOCASE ASC ")
-    fun getSearchItems(search: String): Flow<List<dbArtist>>
+    fun getSearchItems(search: String): Flow<List<DbArtist>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(item: dbArtist)
+    suspend fun insert(item: DbArtist)
 
     @Update
-    suspend fun update(item: dbArtist)
+    suspend fun update(item: DbArtist)
 
     @Delete
-    suspend fun delete(item: dbArtist)
+    suspend fun delete(item: DbArtist)
 }

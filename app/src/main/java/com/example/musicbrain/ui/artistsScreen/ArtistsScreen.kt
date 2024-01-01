@@ -31,9 +31,10 @@ import com.example.musicbrain.ui.components.ListComponentItem
 fun ArtistsScreen(
     toDetailPage: (id: String) -> Unit,
     modifier: Modifier = Modifier,
-    artistsViewModel: ArtistsViewModel = viewModel(
-        factory = ArtistsViewModel.Factory
-    ),
+    artistsViewModel: ArtistsViewModel =
+        viewModel(
+            factory = ArtistsViewModel.Factory,
+        ),
 ) {
     val artistsState by artistsViewModel.uiState.collectAsState()
     val artistListState by artistsViewModel.uiListState.collectAsState()
@@ -41,9 +42,10 @@ fun ArtistsScreen(
     val artistApiState = artistsViewModel.artistsApiState
 
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(16.dp)
+        modifier =
+            modifier
+                .fillMaxSize()
+                .padding(16.dp),
     ) {
         SearchBar(
             query = artistsState.query,
@@ -56,7 +58,7 @@ fun ArtistsScreen(
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Search,
-                    contentDescription = "Search Icon"
+                    contentDescription = "Search Icon",
                 )
             },
             trailingIcon = {
@@ -64,44 +66,48 @@ fun ArtistsScreen(
                     Icon(
                         imageVector = Icons.Default.Close,
                         contentDescription = "Close Icon",
-                        modifier = modifier
-                            .testTag("ArtistsSearchClear")
-                            .clickable {
-                                if (artistsState.query.isNotEmpty()) {
-                                    artistsViewModel.clearQuery()
-                                    artistsViewModel.searchArtists()
-                                    artistsViewModel.setActive(false)
-                                }
-                            }
+                        modifier =
+                            modifier
+                                .testTag("ArtistsSearchClear")
+                                .clickable {
+                                    if (artistsState.query.isNotEmpty()) {
+                                        artistsViewModel.clearQuery()
+                                        artistsViewModel.searchArtists()
+                                        artistsViewModel.setActive(false)
+                                    }
+                                },
                     )
                 }
             },
             active = artistsState.active,
             onActiveChange = artistsViewModel::setActive,
-            modifier = modifier
-                .fillMaxWidth()
-                .testTag("ArtistsSearchBar"),
+            modifier =
+                modifier
+                    .fillMaxWidth()
+                    .testTag("ArtistsSearchBar"),
             onSearch = {
                 artistsViewModel.searchArtists()
-            }
+            },
         ) {
             if (artistsState.searchHistory.isEmpty()) {
                 Text(
                     text = "No recent searches",
-                    modifier = modifier
-                        .padding(8.dp)
-                        .testTag("ArtistsSearchHistoryEmpty")
+                    modifier =
+                        modifier
+                            .padding(8.dp)
+                            .testTag("ArtistsSearchHistoryEmpty"),
                 )
             } else {
-                artistsState.searchHistory.reversed().forEachIndexed { index, query ->
+                artistsState.searchHistory.reversed().forEach { query ->
                     Row(
-                        modifier = modifier
-                            .fillMaxWidth()
-                            .padding(8.dp)
-                            .clickable {
-                                artistsViewModel.updateQuery(query)
-                                artistsViewModel.searchArtists()
-                            }
+                        modifier =
+                            modifier
+                                .fillMaxWidth()
+                                .padding(8.dp)
+                                .clickable {
+                                    artistsViewModel.updateQuery(query)
+                                    artistsViewModel.searchArtists()
+                                },
                     ) {
                         Icon(
                             imageVector = Icons.Default.History,
@@ -129,16 +135,18 @@ fun ArtistsScreen(
             }
             ArtistsApiState.Success -> {
                 ListComponent(
-                    items = artistListState.artists.map {
-                        ListComponentItem(
-                            id = it.id,
-                            name = it.name,
-                            type = it.type,
-                        )
-                    },
+                    items =
+                        artistListState.artists.map {
+                            ListComponentItem(
+                                id = it.id,
+                                name = it.name,
+                                type = it.type,
+                                score = it.score,
+                            )
+                        },
                     toDetailPage = toDetailPage,
                     modifier = modifier,
-                    tagStart = "Artist"
+                    tagStart = "Artist",
                 )
             }
         }

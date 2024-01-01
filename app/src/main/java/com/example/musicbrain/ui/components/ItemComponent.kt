@@ -1,6 +1,5 @@
 package com.example.musicbrain.ui.components
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -16,16 +15,17 @@ import androidx.compose.ui.unit.dp
 fun ItemComponent(
     item: ListComponentItem,
     toDetailPage: (id: String) -> Unit,
-    tagStart: String
+    tagStart: String,
 ) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp)
-            .clickable {
-                toDetailPage(item.id)
-            }
-            .testTag("$tagStart-${item.id}"),
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+                .clickable {
+                    toDetailPage(item.id)
+                }
+                .testTag("$tagStart-${item.id}"),
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         Text(item.name)

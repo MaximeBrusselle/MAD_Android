@@ -1,6 +1,5 @@
 package com.example.musicbrain.repositories
 
-
 import com.example.musicbrain.fake.FakeApiInstrumentRepository
 import com.example.musicbrain.fake.FakeDataSource
 import com.example.musicbrain.network.asDomainObject
@@ -24,14 +23,22 @@ class ApiInstrumentRepositoryTest {
     fun apiInstrumentRepository_getInstrument_verifyInstrument() =
         runTest {
             val repository = FakeApiInstrumentRepository()
-            assertEquals(FakeDataSource.apiInstruments.map { it.asDomainObject() }.find { it.id == testId }, repository.getInstrument(testId).first())
+            assertEquals(
+                FakeDataSource.apiInstruments.map { it.asDomainObject() }.find { it.id == testId },
+                repository.getInstrument(testId).first(),
+            )
         }
 
     @Test
     fun apiInstrumentRepository_searchInstruments_verifyInstrumentsList() =
         runTest {
             val repository = FakeApiInstrumentRepository()
-            assertEquals(FakeDataSource.apiInstruments.map { it.asDomainObject() }.filter { it.name == testSearch }, repository.searchInstruments(testSearch).first())
+            assertEquals(
+                FakeDataSource.apiInstruments.map {
+                    it.asDomainObject()
+                }.filter { it.name == testSearch },
+                repository.searchInstruments(testSearch).first(),
+            )
         }
 
     @Test
@@ -47,7 +54,12 @@ class ApiInstrumentRepositoryTest {
         runTest {
             val repository = FakeApiInstrumentRepository()
             repository.refreshSearch(testSearch)
-            assertEquals(FakeDataSource.apiInstruments.map { it.asDomainObject() }.filter { it.name == testSearch }, repository.searchInstruments(testSearch).first())
+            assertEquals(
+                FakeDataSource.apiInstruments.map {
+                    it.asDomainObject()
+                }.filter { it.name == testSearch },
+                repository.searchInstruments(testSearch).first(),
+            )
         }
 
     @Test
@@ -55,6 +67,9 @@ class ApiInstrumentRepositoryTest {
         runTest {
             val repository = FakeApiInstrumentRepository()
             repository.refreshOne(testId)
-            assertEquals(FakeDataSource.apiInstruments.map { it.asDomainObject() }.find { it.id == testId }, repository.getInstrument(testId).first())
+            assertEquals(
+                FakeDataSource.apiInstruments.map { it.asDomainObject() }.find { it.id == testId },
+                repository.getInstrument(testId).first(),
+            )
         }
 }

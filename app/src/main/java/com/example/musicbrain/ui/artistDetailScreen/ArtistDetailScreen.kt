@@ -35,11 +35,11 @@ import com.example.musicbrain.ui.components.InfoRow
 fun ArtistDetailScreen(
     artistId: String,
     onBack: () -> Unit,
-    detailViewModel: ArtistDetailViewModel = viewModel(
-        factory = ArtistDetailViewModel.Factory,
-    ),
+    detailViewModel: ArtistDetailViewModel =
+        viewModel(
+            factory = ArtistDetailViewModel.Factory,
+        ),
 ) {
-
     LaunchedEffect(artistId) {
         detailViewModel.getApiArtist(artistId = artistId)
     }
@@ -50,19 +50,21 @@ fun ArtistDetailScreen(
             Icon(
                 imageVector = Icons.Default.ArrowBack,
                 contentDescription = "Back",
-                modifier = Modifier
-                    .clickable {
-                        onBack()
-                    }
-                    .padding(8.dp)
+                modifier =
+                    Modifier
+                        .clickable {
+                            onBack()
+                        }
+                        .padding(8.dp),
             )
         }
         when (detailViewModel.artistApiState) {
-            ArtistApiState.Success -> artist?.let {
-                ArtistDetail(
-                    artist = it
-                )
-            }
+            ArtistApiState.Success ->
+                artist?.let {
+                    ArtistDetail(
+                        artist = it,
+                    )
+                }
             ArtistApiState.NotFound -> Text("Artist not found")
             ArtistApiState.Error -> Text("Error")
             ArtistApiState.Loading -> Text("Loading")
@@ -73,16 +75,17 @@ fun ArtistDetailScreen(
 @Composable
 fun ArtistDetail(
     artist: Artist,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier
-            .padding(8.dp)
-            .fillMaxSize(),
+        modifier =
+            modifier
+                .padding(8.dp)
+                .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
     ) {
-        when(artist.type) {
+        when (artist.type) {
             "Person" -> {
                 DetailImage(
                     id = R.drawable.personicon,
@@ -105,34 +108,35 @@ fun ArtistDetail(
 
         Text(
             artist.name,
-            style = TextStyle(
-                fontFamily = FontFamily.Default,
-                fontWeight = FontWeight.ExtraBold,
-                fontSize = 32.sp,
-                lineHeight = 36.sp,
-                letterSpacing = 0.sp
-            ),
+            style =
+                TextStyle(
+                    fontFamily = FontFamily.Default,
+                    fontWeight = FontWeight.ExtraBold,
+                    fontSize = 32.sp,
+                    lineHeight = 36.sp,
+                    letterSpacing = 0.sp,
+                ),
             textAlign = TextAlign.Center,
-            modifier = Modifier
-                .padding(8.dp)
-                .fillMaxWidth()
+            modifier =
+                Modifier
+                    .padding(8.dp)
+                    .fillMaxWidth(),
         )
         Divider()
 
         InfoRow(
             field = stringResource(id = R.string.disambiguation),
-            value = artist.disambiguation
+            value = artist.disambiguation,
         )
         Divider()
         InfoRow(
             field = stringResource(id = R.string.gender),
-            value = artist.gender
+            value = artist.gender,
         )
         Divider()
         InfoRow(
             field = stringResource(id = R.string.score),
             value = artist.score.toString(),
         )
-
     }
 }

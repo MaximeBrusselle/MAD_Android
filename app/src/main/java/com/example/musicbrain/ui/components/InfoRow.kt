@@ -22,19 +22,21 @@ fun InfoRow(
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
-        modifier = Modifier
-            .padding(8.dp)
-            .fillMaxWidth()
+        modifier =
+            Modifier
+                .padding(8.dp)
+                .fillMaxWidth(),
     ) {
         Text(
             text = field,
-            style = TextStyle(
-                fontFamily = FontFamily.Default,
-                fontWeight = FontWeight.Bold,
-                fontSize = 16.sp,
-                lineHeight = 24.sp,
-                letterSpacing = 0.5.sp
-            ),
+            style =
+                TextStyle(
+                    fontFamily = FontFamily.Default,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp,
+                    lineHeight = 24.sp,
+                    letterSpacing = 0.5.sp,
+                ),
             textAlign = TextAlign.Start,
         )
         Text(

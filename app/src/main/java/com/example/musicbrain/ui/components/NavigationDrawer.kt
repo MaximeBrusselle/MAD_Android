@@ -35,12 +35,13 @@ fun NavigationDrawerContent(
                     Icon(
                         imageVector = navItem.icon,
                         contentDescription = "Navigate to ${navItem.name}",
-                        modifier = Modifier.testTag("NavigateTo${navItem.name}Drawer")
+                        modifier = Modifier.testTag("NavigateTo${navItem.name}Drawer"),
                     )
                 },
-                colors = NavigationDrawerItemDefaults.colors(
-                    unselectedContainerColor = Color.Transparent,
-                ),
+                colors =
+                    NavigationDrawerItemDefaults.colors(
+                        unselectedContainerColor = Color.Transparent,
+                    ),
                 onClick = { onTabPressed(navItem.name) },
             )
         }

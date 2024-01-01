@@ -15,4 +15,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "MusicBrain"
 include(":app")
- 

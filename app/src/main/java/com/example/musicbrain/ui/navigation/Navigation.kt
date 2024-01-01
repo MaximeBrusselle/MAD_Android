@@ -13,25 +13,25 @@ import com.example.musicbrain.ui.instrumentsScreen.InstrumentsScreen
 @Composable
 fun Navigation(
     navController: NavHostController,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     NavHost(
         navController = navController,
         startDestination = Destinations.ARTISTS,
-        modifier = modifier
+        modifier = modifier,
     ) {
         composable(Destinations.ARTISTS) {
             ArtistsScreen(
                 toDetailPage = { artistId ->
                     navController.navigate("Artists/$artistId")
-                }
+                },
             )
         }
 
         composable(Destinations.ARTIST_DETAIL) { backStackEntry ->
             ArtistDetailScreen(
                 artistId = backStackEntry.arguments?.getString("artistId")!!,
-                onBack = { navController.popBackStack() }
+                onBack = { navController.popBackStack() },
             )
         }
 
@@ -39,13 +39,13 @@ fun Navigation(
             InstrumentsScreen(
                 toDetailPage = { instrumentId ->
                     navController.navigate("Instruments/$instrumentId")
-                }
+                },
             )
         }
         composable(Destinations.INSTRUMENT_DETAIL) { backStackEntry ->
             InstrumentDetailScreen(
                 instrumentId = backStackEntry.arguments?.getString("instrumentId")!!,
-                onBack = { navController.popBackStack() }
+                onBack = { navController.popBackStack() },
             )
         }
     }

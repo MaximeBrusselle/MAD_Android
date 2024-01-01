@@ -19,8 +19,8 @@ import kotlinx.coroutines.launch
 import java.io.IOException
 
 class InstrumentDetailViewModel(
-    private val instrumentRepository: InstrumentRepository
-): ViewModel() {
+    private val instrumentRepository: InstrumentRepository,
+) : ViewModel() {
     private val _instrument = MutableStateFlow<Instrument?>(null)
     val instrument: StateFlow<Instrument?> = _instrument
     var instrumentApiState: InstrumentApiState by mutableStateOf(InstrumentApiState.Loading)
@@ -41,17 +41,19 @@ class InstrumentDetailViewModel(
 
     companion object {
         private var Instance: InstrumentDetailViewModel? = null
-        val Factory: ViewModelProvider.Factory = viewModelFactory {
-            initializer {
-                if (Instance == null) {
-                    val application = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as MusicBrainApplication)
-                    val instrumentRepository = application.container.instrumentRepository
-                    Instance = InstrumentDetailViewModel(
-                        instrumentRepository = instrumentRepository
-                    )
+        val Factory: ViewModelProvider.Factory =
+            viewModelFactory {
+                initializer {
+                    if (Instance == null) {
+                        val application = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as MusicBrainApplication)
+                        val instrumentRepository = application.container.instrumentRepository
+                        Instance =
+                            InstrumentDetailViewModel(
+                                instrumentRepository = instrumentRepository,
+                            )
+                    }
+                    Instance!!
                 }
-                Instance!!
             }
-        }
     }
 }

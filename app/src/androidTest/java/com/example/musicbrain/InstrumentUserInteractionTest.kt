@@ -20,7 +20,6 @@ import org.junit.Rule
 import org.junit.Test
 
 class InstrumentUserInteractionTest {
-
     private val exampleSearchQuery: String = "piano"
     private val searchedTag: String = "Instrument-b3eac5f9-7859-4416-ac39-7154e2e8d348"
     private val someInstrumentId: String = "1c8f9780-2f16-4891-b66d-bb7aa0820dbd"
@@ -50,7 +49,7 @@ class InstrumentUserInteractionTest {
     }
 
     @Test
-    fun searchHistoryIsInitallyEmpty(){
+    fun searchHistoryIsInitallyEmpty()  {
         composeTestRule
             .onNodeWithTag("InstrumentsSearchBar")
             .assertIsDisplayed()

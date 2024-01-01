@@ -1,6 +1,5 @@
 package com.example.musicbrain.ui.components
 
-import android.util.Log
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -19,12 +18,15 @@ import com.example.musicbrain.R
 import com.example.musicbrain.ui.navigation.NavigationRoutes
 
 @Composable
-fun BottomBar(goToArtists: () -> Unit, goToGenres: () -> Unit) {
+fun BottomBar(
+    goToArtists: () -> Unit,
+    goToGenres: () -> Unit,
+) {
     var selectedItemIndex by rememberSaveable {
         mutableIntStateOf(0)
     }
 
-    NavigationBar (
+    NavigationBar(
         containerColor = MaterialTheme.colorScheme.primaryContainer,
         contentColor = MaterialTheme.colorScheme.primary,
     ) {
@@ -43,10 +45,11 @@ fun BottomBar(goToArtists: () -> Unit, goToGenres: () -> Unit) {
             label = {
                 Text(text = stringResource(id = R.string.artistsRoute))
             },
-            colors = NavigationBarItemDefaults.colors(
-                indicatorColor = MaterialTheme.colorScheme.background,
-            ),
-            modifier = Modifier.testTag("NavigateToArtistsBottom")
+            colors =
+                NavigationBarItemDefaults.colors(
+                    indicatorColor = MaterialTheme.colorScheme.background,
+                ),
+            modifier = Modifier.testTag("NavigateToArtistsBottom"),
         )
         NavigationBarItem(
             selected = selectedItemIndex == 1,
@@ -63,10 +66,11 @@ fun BottomBar(goToArtists: () -> Unit, goToGenres: () -> Unit) {
             label = {
                 Text(text = stringResource(id = R.string.instrumentsRoute))
             },
-            colors = NavigationBarItemDefaults.colors(
-                indicatorColor = MaterialTheme.colorScheme.background,
-            ),
-            modifier = Modifier.testTag("NavigateToInstrumentsBottom")
+            colors =
+                NavigationBarItemDefaults.colors(
+                    indicatorColor = MaterialTheme.colorScheme.background,
+                ),
+            modifier = Modifier.testTag("NavigateToInstrumentsBottom"),
         )
     }
 }

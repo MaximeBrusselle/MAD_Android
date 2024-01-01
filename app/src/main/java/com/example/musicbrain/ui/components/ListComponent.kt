@@ -18,6 +18,7 @@ data class ListComponentItem(
     val id: String,
     val name: String,
     val type: String,
+    val score: Int,
 )
 
 @Composable
@@ -25,18 +26,21 @@ fun ListComponent(
     items: List<ListComponentItem>,
     toDetailPage: (id: String) -> Unit,
     modifier: Modifier = Modifier,
-    tagStart: String
+    tagStart: String,
 ) {
     Box(
-        modifier = modifier.testTag("${tagStart}Box")
+        modifier = modifier.testTag("${tagStart}Box"),
     ) {
         LazyColumn {
             val grouped = items.groupBy { it.name.first().uppercaseChar() }
             grouped.forEach { (initial, items) ->
                 item {
-                    Box(modifier = modifier
-                        .background(color = MaterialTheme.colorScheme.primaryContainer)
-                        .fillMaxWidth()) {
+                    Box(
+                        modifier =
+                            modifier
+                                .background(color = MaterialTheme.colorScheme.primaryContainer)
+                                .fillMaxWidth(),
+                    ) {
                         Text(initial.toString(), modifier = modifier.padding(8.dp))
                     }
                 }
@@ -44,7 +48,7 @@ fun ListComponent(
                     ItemComponent(
                         item = item,
                         toDetailPage = toDetailPage,
-                        tagStart = tagStart
+                        tagStart = tagStart,
                     )
                     if (index != items.lastIndex) {
                         Divider()
@@ -53,5 +57,4 @@ fun ListComponent(
             }
         }
     }
-
 }

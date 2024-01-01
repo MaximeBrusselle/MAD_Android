@@ -13,7 +13,6 @@ class ArtistsViewModelTest {
     private val searchQuery = "DEEZL"
     private lateinit var viewModel: ArtistsViewModel
 
-
     @get:Rule
     val testDispatcher = TestDispatcherRule()
 

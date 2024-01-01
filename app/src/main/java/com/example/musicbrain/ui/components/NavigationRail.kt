@@ -11,7 +11,11 @@ import androidx.navigation.NavDestination
 import com.example.musicbrain.ui.navigation.NavigationRoutes
 
 @Composable
-fun NavigationRail(selectedDestination: NavDestination?, onTabPressed: (String) -> Unit, modifier: Modifier = Modifier) {
+fun NavigationRail(
+    selectedDestination: NavDestination?,
+    onTabPressed: (String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     NavigationRail(
         modifier = modifier,
         contentColor = MaterialTheme.colorScheme.primary,
@@ -24,7 +28,7 @@ fun NavigationRail(selectedDestination: NavDestination?, onTabPressed: (String) 
                     Icon(
                         imageVector = navItem.icon,
                         contentDescription = "Navigate to ${navItem.name}",
-                        modifier = Modifier.testTag("NavigateTo${navItem.name}Rail")
+                        modifier = Modifier.testTag("NavigateTo${navItem.name}Rail"),
                     )
                 },
             )

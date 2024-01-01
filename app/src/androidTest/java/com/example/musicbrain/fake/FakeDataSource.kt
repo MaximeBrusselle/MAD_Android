@@ -4,48 +4,48 @@ import com.example.musicbrain.network.ApiArtist
 import com.example.musicbrain.network.ApiInstrument
 
 object FakeDataSource {
-    private const val artistIdOne = "bc810ce5-7c02-4856-a704-ea0126b3ccfa"
-    private const val artistIdTwo = "1b05edc2-6fb2-4242-a8f4-d6f9795cbc7a"
+    private const val ARTIST_ID_ONE = "bc810ce5-7c02-4856-a704-ea0126b3ccfa"
+    private const val ARTIST_ID_TWO = "1b05edc2-6fb2-4242-a8f4-d6f9795cbc7a"
 
-    private const val artistTypeOne = "Person"
-    private const val artistTypeTwo = "Person"
+    private const val ARTIST_TYPE_ONE = "Person"
+    private const val ARTIST_TYPE_TWO = "Person"
 
-    private const val artistScoreOne = 100
-    private const val artistScoreTwo = 100
+    private const val ARTIST_SCORE_ONE = 100
+    private const val ARTIST_SCORE_TWO = 100
 
-    private const val artistNameOne = "DEEZL"
-    private const val artistNameTwo = "So Juice"
+    private const val ARTIST_NAME_ONE = "DEEZL"
+    private const val ARTIST_NAME_TWO = "So Juice"
 
-    private const val artistgenderOne = "male"
-    private const val artistgenderTwo = "male"
+    private const val ARTIST_GENDER_ONE = "male"
+    private const val ARTIST_GENDER_TWO = "male"
 
-    private const val artistDisambiguationOne = "Rawstyle producer"
-    private const val artistDisambiguationTwo = "Rawstyle producer"
+    private const val ARTIST_DISAMBIGUATION_ONE = "Rawstyle producer"
+    private const val ARTIST_DISAMBIGUATION_TWO = "Rawstyle producer"
 
-    val apiArtists: List<ApiArtist> = listOf(
-        ApiArtist(artistIdOne, artistTypeOne, artistScoreOne, artistNameOne, artistgenderOne, artistDisambiguationOne),
-        ApiArtist(artistIdTwo, artistTypeTwo, artistScoreTwo, artistNameTwo, artistgenderTwo, artistDisambiguationTwo),
-    )
+    val apiArtists: List<ApiArtist> =
+        listOf(
+            ApiArtist(ARTIST_ID_ONE, ARTIST_TYPE_ONE, ARTIST_SCORE_ONE, ARTIST_NAME_ONE, ARTIST_GENDER_ONE, ARTIST_DISAMBIGUATION_ONE),
+            ApiArtist(ARTIST_ID_TWO, ARTIST_TYPE_TWO, ARTIST_SCORE_TWO, ARTIST_NAME_TWO, ARTIST_GENDER_TWO, ARTIST_DISAMBIGUATION_TWO),
+        )
 
-    private const val instrumentIdOne = "b3eac5f9-7859-4416-ac39-7154e2e8d348"
-    private const val instrumentIdTwo = "1c8f9780-2f16-4891-b66d-bb7aa0820dbd"
+    private const val INSTRUMENT_ID_ONE = "b3eac5f9-7859-4416-ac39-7154e2e8d348"
+    private const val INSTRUMENT_ID_TWO = "1c8f9780-2f16-4891-b66d-bb7aa0820dbd"
 
-    private const val instrumentTypeOne = "String instrument"
-    private const val instrumentTypeTwo = "Wind instrument"
+    private const val INSTRUMENT_TYPE_ONE = "String instrument"
+    private const val INSTRUMENT_TYPE_TWO = "Wind instrument"
 
-    private const val instrumentScoreOne = 100
-    private const val instrumentScoreTwo = 100
+    private const val INSTRUMENT_SCORE_ONE = 100
+    private const val INSTRUMENT_SCORE_TWO = 100
 
-    private const val instrumentNameOne = "piano"
-    private const val instrumentNameTwo = "trumpet"
+    private const val INSTRUMENT_NAME_ONE = "piano"
+    private const val INSTRUMENT_NAME_TWO = "trumpet"
 
-    private const val instrumentDescriptionOne = "piano desription"
-    private const val instrumentDescriptionTwo = "trumpet description"
+    private const val INSTRUMENT_DESCRIPTION_ONE = "piano description"
+    private const val INSTRUMENT_DESCRIPTION_TWO = "trumpet description"
 
-    val apiInstruments: List<ApiInstrument> = listOf(
-        ApiInstrument(instrumentIdOne, instrumentTypeOne, instrumentScoreOne, instrumentNameOne, instrumentDescriptionOne),
-        ApiInstrument(instrumentIdTwo, instrumentTypeTwo, instrumentScoreTwo, instrumentNameTwo, instrumentDescriptionTwo),
-    )
-
-    
+    val apiInstruments: List<ApiInstrument> =
+        listOf(
+            ApiInstrument(INSTRUMENT_ID_ONE, INSTRUMENT_TYPE_ONE, INSTRUMENT_SCORE_ONE, INSTRUMENT_NAME_ONE, INSTRUMENT_DESCRIPTION_ONE),
+            ApiInstrument(INSTRUMENT_ID_TWO, INSTRUMENT_TYPE_TWO, INSTRUMENT_SCORE_TWO, INSTRUMENT_NAME_TWO, INSTRUMENT_DESCRIPTION_TWO),
+        )
 }

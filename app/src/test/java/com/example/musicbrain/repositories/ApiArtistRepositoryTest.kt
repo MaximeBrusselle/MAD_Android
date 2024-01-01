@@ -1,6 +1,5 @@
 package com.example.musicbrain.repositories
 
-
 import com.example.musicbrain.fake.FakeApiArtistRepository
 import com.example.musicbrain.fake.FakeDataSource
 import com.example.musicbrain.network.asDomainObject
@@ -24,14 +23,22 @@ class ApiArtistRepositoryTest {
     fun apiArtistRepository_getArtist_verifyArtist() =
         runTest {
             val repository = FakeApiArtistRepository()
-            assertEquals(FakeDataSource.apiArtists.map { it.asDomainObject() }.find { it.id == testId }, repository.getArtist(testId).first())
+            assertEquals(
+                FakeDataSource.apiArtists.map { it.asDomainObject() }.find { it.id == testId },
+                repository.getArtist(testId).first(),
+            )
         }
 
     @Test
     fun apiArtistRepository_searchArtists_verifyArtistsList() =
         runTest {
             val repository = FakeApiArtistRepository()
-            assertEquals(FakeDataSource.apiArtists.map { it.asDomainObject() }.filter { it.name == testSearch }, repository.searchArtists(testSearch).first())
+            assertEquals(
+                FakeDataSource.apiArtists.map {
+                    it.asDomainObject()
+                }.filter { it.name == testSearch },
+                repository.searchArtists(testSearch).first(),
+            )
         }
 
     @Test
@@ -47,7 +54,12 @@ class ApiArtistRepositoryTest {
         runTest {
             val repository = FakeApiArtistRepository()
             repository.refreshSearch(testSearch)
-            assertEquals(FakeDataSource.apiArtists.map { it.asDomainObject() }.filter { it.name == testSearch }, repository.searchArtists(testSearch).first())
+            assertEquals(
+                FakeDataSource.apiArtists.map {
+                    it.asDomainObject()
+                }.filter { it.name == testSearch },
+                repository.searchArtists(testSearch).first(),
+            )
         }
 
     @Test
@@ -55,6 +67,9 @@ class ApiArtistRepositoryTest {
         runTest {
             val repository = FakeApiArtistRepository()
             repository.refreshOne(testId)
-            assertEquals(FakeDataSource.apiArtists.map { it.asDomainObject() }.find { it.id == testId }, repository.getArtist(testId).first())
+            assertEquals(
+                FakeDataSource.apiArtists.map { it.asDomainObject() }.find { it.id == testId },
+                repository.getArtist(testId).first(),
+            )
         }
 }

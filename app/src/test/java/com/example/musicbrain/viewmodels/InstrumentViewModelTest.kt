@@ -13,7 +13,6 @@ class InstrumentsViewModelTest {
     private val searchQuery = "piano"
     private lateinit var viewModel: InstrumentsViewModel
 
-
     @get:Rule
     val testDispatcher = TestDispatcherRule()
 

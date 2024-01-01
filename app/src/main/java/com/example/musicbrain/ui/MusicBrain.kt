@@ -33,7 +33,7 @@ import com.example.musicbrain.ui.util.MusicBrainNavigationType
 @Composable
 fun MusicBrain(
     navigationType: MusicBrainNavigationType,
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController = rememberNavController(),
 ) {
     val backStackEntry by navController.currentBackStackEntryAsState()
 
@@ -45,15 +45,16 @@ fun MusicBrain(
     }
 
     val goToGenres = { navController.navigate(Destinations.INSTRUMENTS) { launchSingleTop = true } }
-    val currentScreenTitle = backStackEntry?.destination?.route?.let {
-        when (it) {
-            Destinations.ARTISTS -> stringResource(id = R.string.artistsRoute)
-            Destinations.INSTRUMENTS -> stringResource(id = R.string.instrumentsRoute)
-            Destinations.ARTIST_DETAIL -> stringResource(id = R.string.artistDetailRoute)
-            Destinations.INSTRUMENT_DETAIL -> stringResource(id = R.string.instrumentDetailRoute)
-            else -> stringResource(id = R.string.app_name)
-        }
-    } ?: stringResource(id = R.string.app_name)
+    val currentScreenTitle =
+        backStackEntry?.destination?.route?.let {
+            when (it) {
+                Destinations.ARTISTS -> stringResource(id = R.string.artistsRoute)
+                Destinations.INSTRUMENTS -> stringResource(id = R.string.instrumentsRoute)
+                Destinations.ARTIST_DETAIL -> stringResource(id = R.string.artistDetailRoute)
+                Destinations.INSTRUMENT_DETAIL -> stringResource(id = R.string.instrumentDetailRoute)
+                else -> stringResource(id = R.string.app_name)
+            }
+        } ?: stringResource(id = R.string.app_name)
 
     when (navigationType) {
         MusicBrainNavigationType.PERMANENT_NAVIGATION_DRAWER -> {
@@ -62,11 +63,12 @@ fun MusicBrain(
                     NavigationDrawerContent(
                         selectedDestination = navController.currentDestination,
                         onTabPressed = { node: String -> navController.navigate(node) },
-                        modifier = Modifier
-                            .wrapContentWidth()
-                            .fillMaxHeight()
-                            .background(MaterialTheme.colorScheme.inverseOnSurface)
-                            .padding(dimensionResource(R.dimen.drawer_padding_content)),
+                        modifier =
+                            Modifier
+                                .wrapContentWidth()
+                                .fillMaxHeight()
+                                .background(MaterialTheme.colorScheme.inverseOnSurface)
+                                .padding(dimensionResource(R.dimen.drawer_padding_content)),
                     )
                 }
             }) {
@@ -95,9 +97,7 @@ fun MusicBrain(
                     )
                 },
                 bottomBar = {
-
                     BottomBar(goToArtists, goToGenres)
-
                 },
             ) { innerPadding ->
                 Navigation(navController, modifier = Modifier.padding(innerPadding))

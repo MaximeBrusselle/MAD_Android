@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import com.example.musicbrain.model.Instrument
 
 @Entity(tableName = "instruments")
-data class dbInstrument(
+data class DbInstrument(
     @PrimaryKey
     val id: String,
     val name: String = "",
@@ -14,7 +14,7 @@ data class dbInstrument(
     val score: Int = 0,
 )
 
-fun dbInstrument.asDomainInstrument(): Instrument {
+fun DbInstrument.asDomainInstrument(): Instrument {
     return Instrument(
         this.id,
         this.name,
@@ -24,8 +24,8 @@ fun dbInstrument.asDomainInstrument(): Instrument {
     )
 }
 
-fun Instrument.asDbInstrument(): dbInstrument {
-    return dbInstrument(
+fun Instrument.asDbInstrument(): DbInstrument {
+    return DbInstrument(
         id = this.id,
         name = this.name,
         type = this.type,
@@ -34,15 +34,16 @@ fun Instrument.asDbInstrument(): dbInstrument {
     )
 }
 
-fun List<dbInstrument>.asDomainInstruments(): List<Instrument> {
-    val instrumentList = this.map {
-        Instrument(
-            it.id,
-            it.name,
-            it.type,
-            it.description,
-            it.score,
-        )
-    }
+fun List<DbInstrument>.asDomainInstruments(): List<Instrument> {
+    val instrumentList =
+        this.map {
+            Instrument(
+                it.id,
+                it.name,
+                it.type,
+                it.description,
+                it.score,
+            )
+        }
     return instrumentList
 }

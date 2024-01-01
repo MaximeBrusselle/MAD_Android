@@ -18,10 +18,11 @@ fun DetailImage(
     Image(
         painter = painterResource(id = id),
         contentDescription = contentDescription,
-        modifier = Modifier
-            .width(128.dp)
-            .height(128.dp)
-            .padding(8.dp)
-            .testTag("DetailImage")
+        modifier =
+            Modifier
+                .width(128.dp)
+                .height(128.dp)
+                .padding(8.dp)
+                .testTag("DetailImage"),
     )
 }

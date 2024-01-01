@@ -52,7 +52,6 @@ android {
 }
 
 dependencies {
-
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
     implementation("androidx.activity:activity-compose:1.8.1")
@@ -62,9 +61,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3:1.1.2")
     implementation("androidx.compose.material:material-icons-extended")
-
     implementation("androidx.navigation:navigation-compose:2.7.5")
-
     implementation("androidx.compose.material3:material3-window-size-class")
 
     // Retrofit
@@ -72,7 +69,8 @@ dependencies {
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    //room
+
+    // room
     val room_version = "2.5.0"
     implementation("androidx.room:room-runtime:$room_version")
     // optional - Kotlin Extensions and Coroutines support for Room
@@ -81,7 +79,7 @@ dependencies {
     ksp("androidx.room:room-compiler:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
 
-    //workers
+    // workers
     implementation("androidx.work:work-runtime-ktx:2.9.0")
 
     // optional - Test helpers
@@ -98,6 +96,5 @@ dependencies {
     androidTestImplementation("androidx.navigation:navigation-testing:2.7.5")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
-
     androidTestImplementation("androidx.test.uiautomator:uiautomator:2.3.0-beta01")
 }

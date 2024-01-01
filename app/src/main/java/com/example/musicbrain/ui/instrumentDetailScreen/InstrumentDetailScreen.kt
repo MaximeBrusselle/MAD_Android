@@ -1,6 +1,5 @@
 package com.example.musicbrain.ui.instrumentDetailScreen
 
-
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -37,11 +36,11 @@ import com.example.musicbrain.ui.components.InfoRow
 fun InstrumentDetailScreen(
     instrumentId: String,
     onBack: () -> Unit,
-    detailViewModel: InstrumentDetailViewModel = viewModel(
-        factory = InstrumentDetailViewModel.Factory,
-    ),
+    detailViewModel: InstrumentDetailViewModel =
+        viewModel(
+            factory = InstrumentDetailViewModel.Factory,
+        ),
 ) {
-
     LaunchedEffect(instrumentId) {
         detailViewModel.getApiInstrument(instrumentId = instrumentId)
     }
@@ -52,19 +51,21 @@ fun InstrumentDetailScreen(
             Icon(
                 imageVector = Icons.Default.ArrowBack,
                 contentDescription = "Back",
-                modifier = Modifier
-                    .clickable {
-                        onBack()
-                    }
-                    .padding(8.dp)
+                modifier =
+                    Modifier
+                        .clickable {
+                            onBack()
+                        }
+                        .padding(8.dp),
             )
         }
         when (detailViewModel.instrumentApiState) {
-            InstrumentApiState.Success -> instrument?.let {
-                InstrumentDetail(
-                    instrument = it
-                )
-            }
+            InstrumentApiState.Success ->
+                instrument?.let {
+                    InstrumentDetail(
+                        instrument = it,
+                    )
+                }
             InstrumentApiState.NotFound -> Text("Instrument not found")
             InstrumentApiState.Error -> Text("Error")
             InstrumentApiState.Loading -> Text("Loading")
@@ -75,14 +76,15 @@ fun InstrumentDetailScreen(
 @Composable
 fun InstrumentDetail(
     instrument: Instrument,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier
-            .padding(8.dp)
-            .fillMaxSize(),
+        modifier =
+            modifier
+                .padding(8.dp)
+                .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
     ) {
         DetailImage(
             id = R.drawable.instrumentsicon,
@@ -90,37 +92,39 @@ fun InstrumentDetail(
         )
         Text(
             instrument.name,
-            style = TextStyle(
-                fontFamily = FontFamily.Default,
-                fontWeight = FontWeight.ExtraBold,
-                fontSize = 32.sp,
-                lineHeight = 36.sp,
-                letterSpacing = 0.sp
-            ),
+            style =
+                TextStyle(
+                    fontFamily = FontFamily.Default,
+                    fontWeight = FontWeight.ExtraBold,
+                    fontSize = 32.sp,
+                    lineHeight = 36.sp,
+                    letterSpacing = 0.sp,
+                ),
             textAlign = TextAlign.Center,
-            modifier = Modifier
-                .padding(8.dp)
-                .fillMaxWidth()
+            modifier =
+                Modifier
+                    .padding(8.dp)
+                    .fillMaxWidth(),
         )
         Text(
             instrument.description,
             style = MaterialTheme.typography.bodySmall,
             textAlign = TextAlign.Center,
-            modifier = Modifier
-                .padding(8.dp)
-                .fillMaxWidth()
+            modifier =
+                Modifier
+                    .padding(8.dp)
+                    .fillMaxWidth(),
         )
         Divider()
 
         InfoRow(
             field = stringResource(id = R.string.type),
-            value = instrument.type
+            value = instrument.type,
         )
         Divider()
         InfoRow(
             field = stringResource(id = R.string.score),
             value = instrument.score.toString(),
         )
-
     }
 }

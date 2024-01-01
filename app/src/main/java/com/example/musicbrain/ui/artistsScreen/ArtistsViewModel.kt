@@ -11,7 +11,6 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.musicbrain.MusicBrainApplication
 import com.example.musicbrain.data.ArtistRepository
-import java.io.IOException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -20,13 +19,14 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 class ArtistsViewModel(
-    private val artistRepository: ArtistRepository
-): ViewModel() {
+    private val artistRepository: ArtistRepository,
+) : ViewModel() {
     private val _uiState =
         MutableStateFlow(
-            ArtistsState()
+            ArtistsState(),
         )
     val uiState: StateFlow<ArtistsState> = _uiState.asStateFlow()
     lateinit var uiListState: StateFlow<ArtistListState>
@@ -39,16 +39,17 @@ class ArtistsViewModel(
         getApiArtists()
     }
 
-   fun getApiArtists() {
+    private fun getApiArtists() {
         try {
             viewModelScope.launch { artistRepository.refresh() }
 
-            uiListState = artistRepository.getArtists().map { ArtistListState(it) }
-                .stateIn(
-                    scope = viewModelScope,
-                    started = SharingStarted.WhileSubscribed(5_000L),
-                    initialValue = ArtistListState()
-                )
+            uiListState =
+                artistRepository.getArtists().map { ArtistListState(it) }
+                    .stateIn(
+                        scope = viewModelScope,
+                        started = SharingStarted.WhileSubscribed(5_000L),
+                        initialValue = ArtistListState(),
+                    )
             if (uiListState.value.artists.isEmpty()) {
                 artistsApiState = ArtistsApiState.NotFound
             }
@@ -66,17 +67,18 @@ class ArtistsViewModel(
             try {
                 viewModelScope.launch { artistRepository.refreshSearch(_uiState.value.query) }
 
-                uiListState = artistRepository.searchArtists(_uiState.value.query)
-                    .map { ArtistListState(it) }
-                    .stateIn(
-                        scope = viewModelScope,
-                        started = SharingStarted.WhileSubscribed(),
-                        initialValue = ArtistListState()
-                    )
+                uiListState =
+                    artistRepository.searchArtists(_uiState.value.query)
+                        .map { ArtistListState(it) }
+                        .stateIn(
+                            scope = viewModelScope,
+                            started = SharingStarted.WhileSubscribed(),
+                            initialValue = ArtistListState(),
+                        )
                 _uiState.update {
                     it.copy(
                         active = false,
-                        searchHistory = it.searchHistory + it.query
+                        searchHistory = it.searchHistory + it.query,
                     )
                 }
                 artistsApiState = ArtistsApiState.Success
@@ -90,7 +92,7 @@ class ArtistsViewModel(
     fun updateQuery(text: String) {
         _uiState.update {
             it.copy(
-                query = text
+                query = text,
             )
         }
     }
@@ -98,7 +100,7 @@ class ArtistsViewModel(
     fun clearQuery() {
         _uiState.update {
             it.copy(
-                query = ""
+                query = "",
             )
         }
     }
@@ -106,22 +108,23 @@ class ArtistsViewModel(
     fun setActive(active: Boolean) {
         _uiState.update {
             it.copy(
-                active = active
+                active = active,
             )
         }
     }
 
     companion object {
-        private var Instance: ArtistsViewModel? = null
-        val Factory: ViewModelProvider.Factory = viewModelFactory {
-            initializer {
-                if (Instance == null) {
-                    val application = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as MusicBrainApplication)
-                    val artistRepository = application.container.artistRepository
-                    Instance = ArtistsViewModel(artistRepository = artistRepository)
+        private var instance: ArtistsViewModel? = null
+        val Factory: ViewModelProvider.Factory =
+            viewModelFactory {
+                initializer {
+                    if (instance == null) {
+                        val application = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as MusicBrainApplication)
+                        val artistRepository = application.container.artistRepository
+                        instance = ArtistsViewModel(artistRepository = artistRepository)
+                    }
+                    instance!!
                 }
-                Instance!!
             }
-        }
     }
 }

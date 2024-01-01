@@ -31,9 +31,10 @@ import com.example.musicbrain.ui.components.ListComponentItem
 fun InstrumentsScreen(
     toDetailPage: (id: String) -> Unit,
     modifier: Modifier = Modifier,
-    instrumentsViewModel: InstrumentsViewModel = viewModel(
-        factory = InstrumentsViewModel.Factory
-    ),
+    instrumentsViewModel: InstrumentsViewModel =
+        viewModel(
+            factory = InstrumentsViewModel.Factory,
+        ),
 ) {
     val instrumentsState by instrumentsViewModel.uiState.collectAsState()
     val instrumentListState by instrumentsViewModel.uiListState.collectAsState()
@@ -41,9 +42,10 @@ fun InstrumentsScreen(
     val instrumentApiState = instrumentsViewModel.instrumentsApiState
 
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(16.dp)
+        modifier =
+            modifier
+                .fillMaxSize()
+                .padding(16.dp),
     ) {
         SearchBar(
             query = instrumentsState.query,
@@ -54,7 +56,7 @@ fun InstrumentsScreen(
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Search,
-                    contentDescription = "Search Icon"
+                    contentDescription = "Search Icon",
                 )
             },
             trailingIcon = {
@@ -62,45 +64,48 @@ fun InstrumentsScreen(
                     Icon(
                         imageVector = Icons.Default.Close,
                         contentDescription = "Close Icon",
-                        modifier = modifier
-                            .testTag("InstrumentsSearchClear")
-                            .clickable {
-                                if (instrumentsState.query.isNotEmpty()) {
-                                    instrumentsViewModel.clearQuery()
-                                    instrumentsViewModel.searchInstruments()
-                                    instrumentsViewModel.setActive(false)
-                                }
-                        }
+                        modifier =
+                            modifier
+                                .testTag("InstrumentsSearchClear")
+                                .clickable {
+                                    if (instrumentsState.query.isNotEmpty()) {
+                                        instrumentsViewModel.clearQuery()
+                                        instrumentsViewModel.searchInstruments()
+                                        instrumentsViewModel.setActive(false)
+                                    }
+                                },
                     )
                 }
             },
             active = instrumentsState.active,
             onActiveChange = instrumentsViewModel::setActive,
-            modifier = modifier
-                .fillMaxWidth()
-                .testTag("InstrumentsSearchBar")
-            ,
+            modifier =
+                modifier
+                    .fillMaxWidth()
+                    .testTag("InstrumentsSearchBar"),
             onSearch = {
                 instrumentsViewModel.searchInstruments()
-            }
+            },
         ) {
             if (instrumentsState.searchHistory.isEmpty()) {
                 Text(
                     text = "No recent searches",
-                    modifier = modifier
-                        .padding(8.dp)
-                        .testTag("InstrumentsSearchHistoryEmpty")
+                    modifier =
+                        modifier
+                            .padding(8.dp)
+                            .testTag("InstrumentsSearchHistoryEmpty"),
                 )
             } else {
                 instrumentsState.searchHistory.reversed().forEach { query ->
                     Row(
-                        modifier = modifier
-                            .fillMaxWidth()
-                            .padding(8.dp)
-                            .clickable {
-                                instrumentsViewModel.updateQuery(query)
-                                instrumentsViewModel.searchInstruments()
-                            }
+                        modifier =
+                            modifier
+                                .fillMaxWidth()
+                                .padding(8.dp)
+                                .clickable {
+                                    instrumentsViewModel.updateQuery(query)
+                                    instrumentsViewModel.searchInstruments()
+                                },
                     ) {
                         Icon(
                             imageVector = Icons.Default.History,
@@ -126,16 +131,18 @@ fun InstrumentsScreen(
             }
             InstrumentsApiState.Success -> {
                 ListComponent(
-                    items = instrumentListState.instruments.map {
-                        ListComponentItem(
-                            id = it.id,
-                            name = it.name,
-                            type = it.type
-                        )
-                    },
+                    items =
+                        instrumentListState.instruments.map {
+                            ListComponentItem(
+                                id = it.id,
+                                name = it.name,
+                                type = it.type,
+                                score = it.score,
+                            )
+                        },
                     toDetailPage = toDetailPage,
                     modifier = modifier,
-                    tagStart = "Instrument"
+                    tagStart = "Instrument",
                 )
             }
         }

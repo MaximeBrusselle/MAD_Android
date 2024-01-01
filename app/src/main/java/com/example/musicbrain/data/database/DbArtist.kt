@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import com.example.musicbrain.model.Artist
 
 @Entity(tableName = "artists")
-data class dbArtist(
+data class DbArtist(
     @PrimaryKey
     val id: String = "",
     val type: String = "",
@@ -15,7 +15,7 @@ data class dbArtist(
     val disambiguation: String = "Unknown",
 )
 
-fun dbArtist.asDomainArtist(): Artist {
+fun DbArtist.asDomainArtist(): Artist {
     return Artist(
         this.id,
         this.type,
@@ -26,8 +26,8 @@ fun dbArtist.asDomainArtist(): Artist {
     )
 }
 
-fun Artist.asDbArtist(): dbArtist {
-    return dbArtist(
+fun Artist.asDbArtist(): DbArtist {
+    return DbArtist(
         id = this.id,
         type = this.type,
         score = this.score,
@@ -37,16 +37,17 @@ fun Artist.asDbArtist(): dbArtist {
     )
 }
 
-fun List<dbArtist>.asDomainArtists(): List<Artist> {
-    val artistList = this.map {
-        Artist(
-            it.id,
-            it.type,
-            it.score,
-            it.name,
-            it.gender,
-            it.disambiguation,
-        )
-    }
+fun List<DbArtist>.asDomainArtists(): List<Artist> {
+    val artistList =
+        this.map {
+            Artist(
+                it.id,
+                it.type,
+                it.score,
+                it.name,
+                it.gender,
+                it.disambiguation,
+            )
+        }
     return artistList
 }

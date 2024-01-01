@@ -41,10 +41,11 @@ class InstrumentDaoTest {
         val context: Context = ApplicationProvider.getApplicationContext()
         // Using an in-memory database because the information stored here disappears when the
         // process is killed.
-        musicDb = Room.inMemoryDatabaseBuilder(context, MusicDb::class.java)
-            // Allowing main thread queries, just for testing.
-            .allowMainThreadQueries()
-            .build()
+        musicDb =
+            Room.inMemoryDatabaseBuilder(context, MusicDb::class.java)
+                // Allowing main thread queries, just for testing.
+                .allowMainThreadQueries()
+                .build()
         instrumentDao = musicDb.instrumentDao()
     }
 
@@ -56,18 +57,20 @@ class InstrumentDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun daoInert_insertInstrumentIntoDB() = runBlocking {
-        addOneInstrumentToDb()
-        val allItems = instrumentDao.getAllItems().first()
-        assertEquals(allItems[0].asDomainInstrument(), instrument1)
-    }
+    fun daoInert_insertInstrumentIntoDB() =
+        runBlocking {
+            addOneInstrumentToDb()
+            val allItems = instrumentDao.getAllItems().first()
+            assertEquals(allItems[0].asDomainInstrument(), instrument1)
+        }
 
     @Test
     @Throws(Exception::class)
-    fun daoGetAllInstruments_returnsAllInstrumentsFromDB() = runBlocking {
-        addTwoInstrumentsToDb()
-        val allItems = instrumentDao.getAllItems().first()
-        assertEquals(allItems[0].asDomainInstrument(), instrument1)
-        assertEquals(allItems[1].asDomainInstrument(), instrument2)
-    }
+    fun daoGetAllInstruments_returnsAllInstrumentsFromDB() =
+        runBlocking {
+            addTwoInstrumentsToDb()
+            val allItems = instrumentDao.getAllItems().first()
+            assertEquals(allItems[0].asDomainInstrument(), instrument1)
+            assertEquals(allItems[1].asDomainInstrument(), instrument2)
+        }
 }

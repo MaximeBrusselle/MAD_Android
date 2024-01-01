@@ -1,6 +1,5 @@
 package com.example.musicbrain.data
 
-
 import android.util.Log
 import com.example.musicbrain.data.database.InstrumentDao
 import com.example.musicbrain.data.database.asDbInstrument
@@ -18,19 +17,23 @@ import kotlinx.coroutines.flow.onEach
 import java.net.SocketTimeoutException
 
 interface InstrumentRepository {
-
     fun getInstruments(): Flow<List<Instrument>>
+
     fun getInstrument(id: String): Flow<Instrument>
 
     fun searchInstruments(query: String): Flow<List<Instrument>>
+
     suspend fun refreshSearch(search: String)
+
     suspend fun refresh()
 
     suspend fun refreshOne(id: String)
 }
 
-class ApiInstrumentsRepository(private val instrumentDao: InstrumentDao, private val musicbrainApiService: MusicBrainApiService) : InstrumentRepository {
-
+class ApiInstrumentsRepository(
+    private val instrumentDao: InstrumentDao,
+    private val musicbrainApiService: MusicBrainApiService,
+) : InstrumentRepository {
     override fun getInstruments(): Flow<List<Instrument>> {
         return instrumentDao.getAllItems().map {
             it.asDomainInstruments()
@@ -93,5 +96,4 @@ class ApiInstrumentsRepository(private val instrumentDao: InstrumentDao, private
             Log.e("ApiInstrumentsRepository", "refreshOne: ${e.message}")
         }
     }
-
 }
